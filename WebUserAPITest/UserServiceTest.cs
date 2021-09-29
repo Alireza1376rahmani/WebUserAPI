@@ -34,7 +34,7 @@ namespace WebUserAPITest
             {
                 Name = "some valid name"
             };
-            mockRepo.Setup(x => x.AddEntity(It.IsAny<User>())).Returns<User>(user => user.Id);
+            mockRepo.Setup(x => x.Add(It.IsAny<User>())).Returns<User>(user => user.Id);
             #endregion
 
             #region Act
@@ -42,7 +42,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.AddEntity(It.Is<User>(User => User.Name == command.Name)));
+            mockRepo.Verify(x => x.Add(It.Is<User>(User => User.Name == command.Name)));
             mockRepo.Verify(x => x.Save());
             mockRepo.VerifyNoOtherCalls();
             #endregion
@@ -57,7 +57,7 @@ namespace WebUserAPITest
                 Name = "some another valid name",
                 Id = Guid.Parse(SOME_GUID)
             };
-            mockRepo.Setup(x => x.UpdateEntity(It.IsAny<Guid>(), It.IsAny<string>()));
+            mockRepo.Setup(x => x.Update(It.IsAny<User>()));
             #endregion
 
             #region Act
@@ -65,7 +65,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.UpdateEntity(It.Is<Guid>(x => x== Guid.Parse(SOME_GUID)),command.Name),Times.Once);
+            mockRepo.Verify(x => x.Update(It.IsAny<User>()),Times.Once);
             mockRepo.Verify(x => x.Save());
             #endregion
         }
@@ -74,7 +74,7 @@ namespace WebUserAPITest
         public void GetAll_ShouldReturnAnArrayOfUsers_AndCallGetAllUsersFromRepository() 
         {
             #region Arrange
-            mockRepo.Setup(x=>x.GetAllEntities()).Returns(()=> {
+            mockRepo.Setup(x=>x.GetAll()).Returns(()=> {
                 var userList = new List<User>();
                 userList.Add(new User(Guid.NewGuid(),SOME_NAME));
                 userList.Add(new User(Guid.NewGuid(), SOME_NAME));
@@ -87,6 +87,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
+            Assert.IsType<List<User>>(act);
             #endregion
         }
     }

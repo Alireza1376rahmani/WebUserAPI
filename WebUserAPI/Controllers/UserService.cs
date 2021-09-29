@@ -19,19 +19,20 @@ namespace WebUserAPI.Controllers
         public void CreateUser(CreateUserCommand command)
         {
             var user = new User(Guid.NewGuid(),command.Name);
-            repository.AddUser(user);
+            repository.Add(user);
             repository.Save();
         }
 
         public void UpdateUser(UpdateUserCommand command)
         {
-            repository.UpdateName(command.Id, command.Name);
+            repository.Update(new User(command.Id,command.Name));
             repository.Save();
         }
 
         public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            var allUsers = repository.GetAll();
+            return allUsers;
         }
     }
 }

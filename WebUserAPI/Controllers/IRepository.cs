@@ -9,8 +9,8 @@ namespace WebUserAPI.Controllers
     {
         public TEntity GetById(Guid id);
         public void Save();
-        Guid AddEntity(TEntity entity);
-        void UpdateEntity(TEntity entity);
-        List<TEntity> GetAllEntities();
+        Guid Add(TEntity entity);
+        void Update(TEntity entity);
+        List<TEntity> GetAll();
     }
 }
