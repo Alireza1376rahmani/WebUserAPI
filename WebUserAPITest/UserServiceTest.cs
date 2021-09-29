@@ -83,11 +83,30 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            var act = sut.GetAll();
+            var act = sut.GetAllUsers();
             #endregion
 
             #region Assert
             Assert.IsType<List<User>>(act);
+            mockRepo.Verify(x => x.GetAll());
+            mockRepo.VerifyNoOtherCalls();
+            #endregion
+        }
+
+        [Fact]
+        public void GetUserById_ShouldReturnCorrectUser_WithExistingId()
+        {
+            #region Arrange
+            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns<Guid>(x=>new User(x,SOME_NAME));
+            var expectedId = Guid.Parse(SOME_GUID);
+            #endregion
+
+            #region Act
+            var act = sut.GetUserById(Guid.Parse(SOME_GUID));
+            #endregion
+
+            #region Assert
+            Assert.Equal(expectedId,act.Id);
             #endregion
         }
     }

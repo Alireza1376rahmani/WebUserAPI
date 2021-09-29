@@ -12,5 +12,6 @@ namespace WebUserAPI.Controllers
         Guid Add(TEntity entity);
         void Update(TEntity entity);
         List<TEntity> GetAll();
+
     }
 }
