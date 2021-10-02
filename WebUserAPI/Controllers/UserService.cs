@@ -31,14 +31,18 @@ namespace WebUserAPI.Controllers
 
         public List<User> GetAllUsers()
         {
-            var allUsers = repository.GetAll();
-            return allUsers;
+            return repository.GetAll();
         }
 
-        public User GetUserById(Guid id)
+        public User GetUserById(ReadUserCommand command)
         {
-            var user = repository.GetById(id);
-            return user;
+            return repository.GetById(command.Id);
+        }
+
+        public void DeleteUser(DeleteUserCommand command)
+        {
+            repository.Delete(command.Id);
+            repository.Save();
         }
     }
 }

@@ -15,4 +15,11 @@ namespace WebUserAPI.Model
     {
         public Guid Id { get; set; }
     }
+
+    public class ReadUserCommand
+    {
+        public Guid Id { get; set; }
+    }
+
+    public class DeleteUserCommand : ReadUserCommand { }
 }
