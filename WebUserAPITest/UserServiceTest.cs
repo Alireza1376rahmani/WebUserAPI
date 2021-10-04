@@ -36,7 +36,7 @@ namespace WebUserAPITest
             {
                 Name = "some valid name"
             };
-            mockRepo.Setup(x => x.Add(It.IsAny<User>())).Returns<User>(user => user.Id);
+            mockRepo.Setup(x => x.Create(It.IsAny<User>())).Returns<User>(user => user.Id);
             #endregion
 
             #region Act
@@ -44,7 +44,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Add(It.Is<User>(User => User.Name == command.Name)));
+            mockRepo.Verify(x => x.Create(It.Is<User>(User => User.Name == command.Name)));
             mockRepo.Verify(x => x.Save());
             mockRepo.VerifyNoOtherCalls();
             #endregion

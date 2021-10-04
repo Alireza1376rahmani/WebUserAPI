@@ -16,7 +16,7 @@ namespace WebUserAPI.Controllers
             users = new List<User>();
         }
 
-        public Guid Add(User entity)
+        public Guid Create(User entity)
         {
             users.Add(entity);
             return entity.Id;

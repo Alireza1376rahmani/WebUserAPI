@@ -10,6 +10,7 @@ namespace WebUserAPI.Domain
     {
         public string Name { get; private set; }
 
+
         public void UpdateName(string name)
         {
             Name = name;
