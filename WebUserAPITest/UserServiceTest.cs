@@ -36,7 +36,7 @@ namespace WebUserAPITest
             {
                 Name = "some valid name"
             };
-            mockRepo.Setup(x => x.Create(It.IsAny<User>())).Returns<User>(user => user.Id);
+            mockRepo.Setup(x => x.Create(It.IsAny<User>()));
             #endregion
 
             #region Act

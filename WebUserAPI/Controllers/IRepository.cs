@@ -8,7 +8,7 @@ namespace WebUserAPI.Controllers
         where TEntity:Entity
     {
         public TEntity GetById(Guid id);
-        Guid Create(TEntity entity);
+        void Create(TEntity entity);
         void Update(TEntity entity);
         List<TEntity> GetAll();
         void Delete(Guid id);
