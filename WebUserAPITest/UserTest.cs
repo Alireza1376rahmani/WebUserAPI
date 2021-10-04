@@ -8,21 +8,15 @@ using Xunit;
 
 namespace WebUserAPITest
 {
-    public class UserTest : EntityTest<User>
+    public class UserTest : PrincipalTest<User>
     {
-
-        private const string SOME_NAME = "some valid name";
 
         protected override User GetInstance()
         {
             return new User(Guid.Parse(SOME_ID), SOME_NAME);
         }
 
-        protected override void AssertInvariants()
-        {
-            base.AssertInvariants();
-            Assert.Equal(SOME_NAME, sut.Name);
-        }
+        
 
 
 

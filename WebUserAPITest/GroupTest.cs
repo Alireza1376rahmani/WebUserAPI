@@ -7,10 +7,11 @@ using WebUserAPI.Domain;
 
 namespace WebUserAPITest
 {
-    public class TestPrincipal : Principal
+    public class GroupTest : PrincipalTest<Group>
     {
-        public TestPrincipal(Guid id, string name) : base(id, name) { }
-
-
+        protected override Group GetInstance()
+        {
+            return new Group(Guid.Parse(SOME_ID),SOME_NAME);
+        }
     }
 }

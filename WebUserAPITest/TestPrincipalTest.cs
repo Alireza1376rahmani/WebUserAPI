@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace WebUserAPITest
 {
-    class TestPrincipalTest
+    public class TestPrincipalTest : PrincipalTest<TestPrincipal>
     {
+        protected override TestPrincipal GetInstance()
+        {
+            return new TestPrincipal(Guid.Parse(SOME_ID), SOME_NAME);
+        }
     }
 }
