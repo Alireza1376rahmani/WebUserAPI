@@ -8,7 +8,13 @@ namespace WebUserAPI.Domain
 {
     public abstract class Principal : Entity
     {
-        public string Name { get; }
+        public string Name { get; private set; }
+
+        public void UpdateName(string name)
+        {
+            Name = name;
+        }
+
         public List<Group> Groups { get; set; }
 
         public Principal(Guid id, string name) : base(id)

@@ -25,7 +25,8 @@ namespace WebUserAPI.Controllers
 
         public void UpdateUser(UpdateUserCommand command)
         {
-            repository.Update(new User(command.Id, command.Name));
+            var user = repository.GetById(command.Id);
+            repository.Update(user);
             repository.Save();
         }
 

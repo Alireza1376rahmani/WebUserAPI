@@ -16,10 +16,6 @@ namespace WebUserAPITest
             return new User(Guid.Parse(SOME_ID), SOME_NAME);
         }
 
-        
-
-
-
         [Fact]
         public void Constructor_MustTHrowInvalidArgumentExceptionWhenUserNameIsLessThan10Characters()
         {

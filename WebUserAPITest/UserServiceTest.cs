@@ -19,9 +19,11 @@ namespace WebUserAPITest
 
         private const string SOME_NAME = "some valid name";
         private readonly Guid SOME_GUID = Guid.Parse("5b2bf1b5-5edc-4ba5-92c1-330c126bebb7");
+        private readonly User SOME_USER ;
 
         public UserServiceTest()
         {
+            SOME_USER = new User(SOME_GUID, SOME_NAME);
             mockRepo = new Mock<IRepository<User>>();
             sut = new UserService(mockRepo.Object);
         }
@@ -58,6 +60,7 @@ namespace WebUserAPITest
                 Id = SOME_GUID
             };
             mockRepo.Setup(x => x.Update(It.IsAny<User>()));
+            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(SOME_USER);
             #endregion
 
             #region Act
@@ -65,7 +68,8 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
+            mockRepo.Verify(x => x.Update(SOME_USER), Times.Once);
+            mockRepo.Verify(x => x.GetById(SOME_GUID),Times.Once);
             mockRepo.Verify(x => x.Save());
             #endregion
         }
