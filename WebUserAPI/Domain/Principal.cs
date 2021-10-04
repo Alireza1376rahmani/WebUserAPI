@@ -8,20 +8,18 @@ namespace WebUserAPI.Domain
 {
     public abstract class Principal : Entity
     {
-        public List<Group> Groups {
-            get {
-                var readonlyGroups = new List<Group>(Groups);
-                return readonlyGroups; }
-            set { } }
         public string Name { get; }
+        public List<Group> Groups { get; set; }
 
-
-        public Principal(Guid id ,string name) : base(id)
+        public Principal(Guid id, string name) : base(id)
         {
+            Groups = new List<Group>();
             Name = name;
         }
 
-        
-
+        public void AddGroup(Group group)
+        {
+            Groups.Add(group);
+        }
     }
 }

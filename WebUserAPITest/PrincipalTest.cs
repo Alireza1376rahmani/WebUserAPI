@@ -10,7 +10,7 @@ using WebUserAPI.Domain;
 namespace WebUserAPITest
 {
     public abstract class PrincipalTest<TPrincipal> : EntityTest<Principal>
-        where TPrincipal: Principal
+        where TPrincipal : Principal
     {
         protected const string SOME_NAME = "some valid name";
 
@@ -22,5 +22,20 @@ namespace WebUserAPITest
 
         protected abstract override TPrincipal GetInstance();
 
+        [Fact]
+        public void AddGroup_MustAddGivenGroupToListOfGroups()
+        {
+            #region Arrange
+            var someGroup = new Group(Guid.NewGuid(), SOME_NAME);
+            #endregion
+
+            #region Act
+            sut.AddGroup(someGroup);
+            #endregion
+
+            #region Assert
+            Assert.Contains(sut.Groups, group => group == someGroup);
+            #endregion
+        }
     }
 }
