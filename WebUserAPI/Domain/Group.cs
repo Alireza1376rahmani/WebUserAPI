@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebUserAPI.Domain
 {
-    public class User : Principal
+    public class Group : Principal
     {
-        public User(Guid id, string name) : base(id, name)
+        public Group(Guid id, string name) : base(id, name)
         {
-            Guard.Ensures(()=> name.Length > 9,nameof(name));
         }
     }
 }
