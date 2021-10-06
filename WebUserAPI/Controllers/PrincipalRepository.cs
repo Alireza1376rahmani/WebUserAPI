@@ -6,18 +6,18 @@ using WebUserAPI.Domain;
 
 namespace WebUserAPI.Controllers
 {
-    public class PrincipalRepository<TPrincipal> : IRepository<TPrincipal>
-        where TPrincipal : Principal
+    public class PrincipalRepository : IRepository<Principal>
+
     {
 
-        private Dictionary<Guid, TPrincipal> list;
+        private Dictionary<Guid, Principal> list;
 
         public PrincipalRepository()
         {
-            list = new Dictionary<Guid, TPrincipal>();
+            list = new Dictionary<Guid, Principal>();
         }
 
-        public void Create(TPrincipal entity)
+        public void Create(Principal entity)
         {
             list.Add(entity.Id, entity);
         }
@@ -27,25 +27,36 @@ namespace WebUserAPI.Controllers
             list.Remove(id);
         }
 
-        public List<TPrincipal> GetAll()
+        public List<Principal> GetAll()
         {
-            List<TPrincipal> copy = new List<TPrincipal>();
+            List<Principal> copy = new List<Principal>();
             foreach (var item in list)
                 copy.Add(item.Value);
             return copy;
         }
 
-        public TPrincipal GetById(Guid id)
+        public Principal GetById(Guid id)
         {
             return list[id];
         }
 
         public void Save() { }
 
-        public void Update(TPrincipal entity)
+        public void Update(Principal entity)
         {
             list.Remove(entity.Id);
             list.Add(entity.Id, entity);
+        }
+
+        public void JoinToGroup( Guid principalId , Guid groupId)
+        {
+            /*
+            var thePrincipal = GetPrincipalById(new ReadPrincipalCommand { Id = command.PrincipalId });
+            var groupPrincipal = GetPrincipalById(new ReadPrincipalCommand { Id = command.GroupId });
+            var theGroup = new Group(groupPrincipal.Id, groupPrincipal.Name);
+
+            thePrincipal.RemoveGroup(theGroup);
+            */
         }
     }
 }

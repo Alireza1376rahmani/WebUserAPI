@@ -20,10 +20,10 @@ namespace WebUserAPI.Model
     {
         public Guid Id { get; set; }
     }
-    public class PrincipalJoinsGroupCommand
+    public class PrincipalJoinsToGroupCommand
     {
         public Guid PrincipalId { get; set; }
         public Guid GroupId { get; set; }
     }
-    public class PrincipalLeavesGroupCommand : PrincipalJoinsGroupCommand { }
+    public class PrincipalLeavesGroupCommand : PrincipalJoinsToGroupCommand { }
 }

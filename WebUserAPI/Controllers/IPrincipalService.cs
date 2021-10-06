@@ -9,7 +9,7 @@ namespace WebUserAPI.Controllers
         void CreatePrincipal(CreatePrincipalCommand command);
         void DeletePrincipal(DeletePrincipalCommand command);
         List<Principal> GetAllPrincipals();
-        User GetPrincipalById(ReadPrincipalCommand command);
+        Principal GetPrincipalById(ReadPrincipalCommand command);
         void UpdatePrincipal(UpdatePrincipalCommand command);
     }
 }

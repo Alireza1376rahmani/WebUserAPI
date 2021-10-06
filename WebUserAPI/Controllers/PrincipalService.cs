@@ -7,7 +7,7 @@ using WebUserAPI.Model;
 
 namespace WebUserAPI.Controllers
 {
-    public class PrincipalService 
+    public class PrincipalService : IPrincipalService
     {
         protected readonly IRepository<Principal> repository;
 
@@ -51,5 +51,20 @@ namespace WebUserAPI.Controllers
             repository.Save();
         }
 
+        public void PrincipalJoinsToGroup(PrincipalJoinsToGroupCommand command)
+        {
+            var thePrincipal = repository.GetById(command.PrincipalId);
+            var groupPrincipal = repository.GetById(command.GroupId);
+            var theGroup = new Group(groupPrincipal.Id, groupPrincipal.Name);
+
+            thePrincipal.AddGroup(theGroup);
+
+            repository.Update(thePrincipal);
+        }
+
+        public void PrincipalLeavesGroup()
+        {
+
+        }
     }
 }

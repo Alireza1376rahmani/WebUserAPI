@@ -124,5 +124,29 @@ namespace WebUserAPITest
             #endregion
         }
 
+        [Fact]
+        public void PrincipalJoinsToGroup_ShouldAddTheGivenGroupToListOfGroupsForGivenPrincipal()
+        {
+            #region Arrange
+            Guid givenGroupId = Guid.NewGuid();
+            var command = new PrincipalJoinsToGroupCommand
+            {
+                PrincipalId = Guid.Parse(SOME_GUID),
+                GroupId = givenGroupId
+            };
+            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns<Guid>(id => new Group(id, SOME_NAME));
+            mockRepo.Setup(x => x.Update(It.IsAny<Principal>()));
+            #endregion
+
+            #region Act
+            sut.PrincipalJoinsToGroup(command);
+            #endregion
+
+            #region Assert
+            mockRepo.Verify(x => x.Update(It.Is<Principal>(principal => principal.Groups.Find(e=> e.Id==givenGroupId) != null)));
+            #endregion
+        }
     }
+
 }
+

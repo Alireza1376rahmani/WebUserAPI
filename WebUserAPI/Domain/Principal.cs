@@ -9,13 +9,6 @@ namespace WebUserAPI.Domain
     public abstract class Principal : Entity
     {
         public string Name { get; private set; }
-
-
-        public void UpdateName(string name)
-        {
-            Name = name;
-        }
-
         public List<Group> Groups { get; set; }
 
         public Principal(Guid id, string name) : base(id)
@@ -24,9 +17,19 @@ namespace WebUserAPI.Domain
             Name = name;
         }
 
+        public void UpdateName(string name)
+        {
+            Name = name;
+        }
+
         public void AddGroup(Group group)
         {
             Groups.Add(group);
+        }
+
+        public void RemoveGroup(Group group)
+        {
+            Groups.Remove(group);
         }
     }
 }
