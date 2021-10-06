@@ -60,6 +60,7 @@ namespace WebUserAPITest
                 Name = anotherName
             };
             mockRepo.Setup(x => x.Update(It.IsAny<Group>()));
+            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns<Guid>(id=> new Group(id,SOME_NAME));
             #endregion
 
             #region Act
@@ -67,9 +68,8 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Update(It.Is<Group>(x => (x.Name != anotherName && x.Id == Guid.Parse(SOME_GUID)))));
+            mockRepo.Verify(x => x.Update(It.Is<Group>(x => (x.Name == anotherName && x.Id == Guid.Parse(SOME_GUID)))));
             mockRepo.Verify(x => x.Save());
-            mockRepo.VerifyNoOtherCalls();
             #endregion
         }
 
