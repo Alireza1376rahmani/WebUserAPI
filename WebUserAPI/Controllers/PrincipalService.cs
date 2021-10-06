@@ -7,7 +7,7 @@ using WebUserAPI.Model;
 
 namespace WebUserAPI.Controllers
 {
-    public class PrincipalService : IPrincipalService
+    public class PrincipalService 
     {
         protected readonly IRepository<Principal> repository;
 
@@ -40,15 +40,12 @@ namespace WebUserAPI.Controllers
             return repository.GetAll();
         }
 
-        public Principal GetPrincipalById(IRead command)
+        public Principal GetPrincipalById(ReadPrincipalCommand command)
         {
             return repository.GetById(command.Id);
         }
-        public TSubType GetById<TSubType>(IRead command) where TSubType:Principal
-        {
-            return repository.GetById<TSubType>(command.Id);
-        }
-        public void DeletePrincipal(IDelete command)
+
+        public void DeletePrincipal(DeletePrincipalCommand command)
         {
             repository.Delete(command.Id);
             repository.Save();

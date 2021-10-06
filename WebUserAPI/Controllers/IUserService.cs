@@ -9,7 +9,6 @@ namespace WebUserAPI.Controllers
 {
     public interface IUserService
     {
-        public void CreateUser(CreateUserCommand command);
         
     }
 }

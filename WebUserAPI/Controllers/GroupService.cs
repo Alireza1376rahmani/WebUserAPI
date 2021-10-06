@@ -14,14 +14,14 @@ namespace WebUserAPI
             this.repo = repo;
         }
 
-        public void CreateGroup(CreateGroupCommand command)
+        public void CreateGroup(CreatePrincipalCommand command)
         {
             var group = new Group(Guid.NewGuid(), command.Name);
             repo.Create(group);
             repo.Save();
         }
 
-        public void UpdateGroup(UpdateGroupCommand command)
+        public void UpdateGroup(UpdatePrincipalCommand command)
         {
             var group = repo.GetById(command.Id);
             group.UpdateName(command.Name);

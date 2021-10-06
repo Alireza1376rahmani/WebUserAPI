@@ -30,7 +30,7 @@ namespace WebUserAPI.Controllers
         }
 
         [HttpPost]
-        public void Create([FromBody] CreateUserCommand command) 
+        public void Create([FromBody] CreatePrincipalCommand command) 
         {
             
         }

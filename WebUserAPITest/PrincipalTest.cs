@@ -6,21 +6,27 @@ using System.Threading.Tasks;
 using Xunit;
 using WebUserAPI;
 using WebUserAPI.Domain;
+using WebUserAPI.Model;
+using Moq;
+using WebUserAPI.Controllers;
 
 namespace WebUserAPITest
 {
     public abstract class PrincipalTest<TPrincipal> : EntityTest<Principal>
         where TPrincipal : Principal
     {
+
         protected const string SOME_NAME = "some valid name";
+        protected const string SOME_GUID = "3b2bf1b5-5edc-4ba5-92c1-330c126bebb7";
+
+        protected abstract override TPrincipal GetInstance();
+
 
         protected override void AssertInvariants()
         {
             base.AssertInvariants();
             Assert.Equal(SOME_NAME, sut.Name);
         }
-
-        protected abstract override TPrincipal GetInstance();
 
         [Fact]
         public void AddGroup_MustAddGivenGroupToListOfGroups()
@@ -37,5 +43,6 @@ namespace WebUserAPITest
             Assert.Contains(sut.Groups, group => group == someGroup);
             #endregion
         }
+
     }
 }

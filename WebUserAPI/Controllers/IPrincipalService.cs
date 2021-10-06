@@ -6,10 +6,10 @@ namespace WebUserAPI.Controllers
 {
     public interface IPrincipalService
     {
-        void CreatePrincipal(ICreate command);
-        void DeletePrincipal(IDelete command);
-        List<User> GetAllPrincipals();
-        User GetPrincipalById(IRead command);
-        void UpdatePrincipal(IUpdate command);
+        void CreatePrincipal(CreatePrincipalCommand command);
+        void DeletePrincipal(DeletePrincipalCommand command);
+        List<Principal> GetAllPrincipals();
+        User GetPrincipalById(ReadPrincipalCommand command);
+        void UpdatePrincipal(UpdatePrincipalCommand command);
     }
 }
