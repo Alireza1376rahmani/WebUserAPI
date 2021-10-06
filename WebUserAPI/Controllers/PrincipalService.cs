@@ -7,42 +7,48 @@ using WebUserAPI.Model;
 
 namespace WebUserAPI.Controllers
 {
-    public class PrincipalService<TPrincipal>
-        where TPrincipal:Principal
+    public class PrincipalService : IPrincipalService
     {
-        protected readonly IRepository<User> repository;
+        protected readonly IRepository<Principal> repository;
 
-        public PrincipalService(IRepository<User> repository)
+        public PrincipalService(IRepository<Principal> repository)
         {
             this.repository = repository;
         }
 
-        public void CreateUser(CreateUserCommand command)
+        public void CreatePrincipal(CreatePrincipalCommand command)
         {
-            var user = new User(Guid.NewGuid(), command.Name);
-            repository.Create(user);
+            Principal principal;
+            if (command.Type == "user")
+                principal = new User(Guid.NewGuid(), command.Name);
+            else
+                principal = new Group(Guid.NewGuid(), command.Name);
+            repository.Create(principal);
             repository.Save();
         }
 
-        public void UpdateUser(UpdateUserCommand command)
+        public void UpdatePrincipal(UpdatePrincipalCommand command)
         {
-            var user = repository.GetById(command.Id);
-            user.UpdateName(command.Name);
-            repository.Update(user);
+            var principal = repository.GetById(command.Id);
+            principal.UpdateName(command.Name);
+            repository.Update(principal);
             repository.Save();
         }
 
-        public List<User> GetAllUsers()
+        public List<Principal> GetAllPrincipals()
         {
             return repository.GetAll();
         }
 
-        public User GetUserById(ReadUserCommand command)
+        public Principal GetPrincipalById(IRead command)
         {
             return repository.GetById(command.Id);
         }
-
-        public void DeleteUser(DeleteUserCommand command)
+        public TSubType GetById<TSubType>(IRead command) where TSubType:Principal
+        {
+            return repository.GetById<TSubType>(command.Id);
+        }
+        public void DeletePrincipal(IDelete command)
         {
             repository.Delete(command.Id);
             repository.Save();

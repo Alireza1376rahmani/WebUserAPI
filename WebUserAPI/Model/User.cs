@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace WebUserAPI.Model
 {
+    public class CreatePrincipalCommand 
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
+
+    public class UpdatePrincipalCommand : CreatePrincipalCommand
+    {
+        public Guid Id { get; set; }
+    }
+
     public class CreateUserCommand :ICreate
     {
         public string Name { get; set; }

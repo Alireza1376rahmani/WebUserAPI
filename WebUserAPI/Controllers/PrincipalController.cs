@@ -4,28 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUserAPI.Domain;
 using WebUserAPI.Model;
 
 namespace WebUserAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class PrincipalController : ControllerBase
     {
 
-        private readonly ILogger<UserController> _logger;
-        private readonly IWeatherService weatherService;
+        private readonly ILogger<PrincipalController> _logger;
+        private readonly IPrincipalService principalService;
 
-        public UserController(ILogger<UserController> logger, IWeatherService weatherService)
+        public PrincipalController(ILogger<PrincipalController> logger, IPrincipalService principalService)
         {
             _logger = logger;
-            this.weatherService = weatherService;
+            this.principalService = principalService;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<Principal> Get()
         {
-            return weatherService.GetAll();
+            return principalService.GetAllPrincipals();
         }
 
         [HttpPost]
