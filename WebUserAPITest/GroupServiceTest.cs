@@ -50,7 +50,7 @@ namespace WebUserAPITest
         }
 
         [Fact]
-        public void UpdateGroup_MustWorkCorrectly_WithCompleteAndCorrectCommand()
+        public void UpdateGroup_MustWorkCorrectly_WithProperCommand()
         {
             #region Arrange
             var anotherName = "another valid name";
@@ -73,5 +73,19 @@ namespace WebUserAPITest
             #endregion
         }
 
+
+        [Fact]
+        public void GetGroupById_MustWorkCorrectly_WithProperCommand()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+            sut.
+            #endregion
+
+            #region Assert
+            #endregion
+        }
     }
 }
