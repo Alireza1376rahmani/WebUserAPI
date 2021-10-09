@@ -62,9 +62,15 @@ namespace WebUserAPI.Controllers
             repository.Update(thePrincipal);
         }
 
-        public void PrincipalLeavesGroup()
+        public void PrincipalLeavesGroup(PrincipalLeavesGroupCommand command)
         {
+            var thePrincipal = repository.GetById(command.PrincipalId);
+            var groupPrincipal = repository.GetById(command.GroupId);
+            var theGroup = new Group(groupPrincipal.Id, groupPrincipal.Name);
 
+            thePrincipal.RemoveGroup(theGroup);
+
+            repository.Update(thePrincipal);
         }
     }
 }

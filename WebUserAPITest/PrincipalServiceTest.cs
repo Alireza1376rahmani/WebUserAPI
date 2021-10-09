@@ -143,10 +143,34 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Update(It.Is<Principal>(principal => principal.Groups.Find(e=> e.Id==givenGroupId) != null)));
+            mockRepo.Verify(x => x.Update(It.Is<Principal>(principal =>
+            (principal.Groups.Find(e => e.Id == givenGroupId) != null) && (principal.Id == Guid.Parse(SOME_GUID))
+            )));
             #endregion
         }
-    }
 
+        [Fact]
+        public void PrincipalLeavesGroup_ShouldRemoveTheProperGivenGroupFromListsOfGroupsOfGivenPrincipal()
+        {
+            #region Arrange
+            var givenGroupId = Guid.NewGuid();
+            var command = new PrincipalLeavesGroupCommand
+            {
+                PrincipalId = Guid.Parse(SOME_GUID),
+                GroupId = givenGroupId
+            };
+            mockRepo.Setup(x=>x.GetById(It.IsAny<Guid>())).Returns<Guid>(x=> new Group(x,SOME_NAME));
+            #endregion
+
+            #region Act
+            sut.PrincipalLeavesGroup(command);
+            #endregion
+
+            #region Assert
+            mockRepo.Verify(x => x.Update(It.Is<Principal>(x => (x.Id == Guid.Parse(SOME_GUID)) && (x.Groups.Find(x => x.Id == givenGroupId) == null))));
+            #endregion
+        }
+
+    }
 }
 
