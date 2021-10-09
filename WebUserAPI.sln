@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUserAPI", "WebUserAPI\WebUserAPI.csproj", "{3DB0E2EB-BBBA-4FCA-A291-FF090FFAEBD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUserAPITest", "WebUserAPITest\WebUserAPITest.csproj", "{304F2F01-04F7-40F0-892D-84720BC87424}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUserAPITest", "WebUserAPITest\WebUserAPITest.csproj", "{304F2F01-04F7-40F0-892D-84720BC87424}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowProject", "SpecFlowProject\SpecFlowProject.csproj", "{0B26439D-A2E0-4265-85F8-A007BAEAE26E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{304F2F01-04F7-40F0-892D-84720BC87424}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{304F2F01-04F7-40F0-892D-84720BC87424}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{304F2F01-04F7-40F0-892D-84720BC87424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B26439D-A2E0-4265-85F8-A007BAEAE26E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B26439D-A2E0-4265-85F8-A007BAEAE26E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B26439D-A2E0-4265-85F8-A007BAEAE26E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B26439D-A2E0-4265-85F8-A007BAEAE26E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
