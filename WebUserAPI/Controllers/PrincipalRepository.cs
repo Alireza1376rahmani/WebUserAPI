@@ -7,7 +7,6 @@ using WebUserAPI.Domain;
 namespace WebUserAPI.Controllers
 {
     public class PrincipalRepository : IRepository<Principal>
-
     {
 
         private Dictionary<Guid, Principal> list;
@@ -48,15 +47,5 @@ namespace WebUserAPI.Controllers
             list.Add(entity.Id, entity);
         }
 
-        public void JoinToGroup( Guid principalId , Guid groupId)
-        {
-            /*
-            var thePrincipal = GetPrincipalById(new ReadPrincipalCommand { Id = command.PrincipalId });
-            var groupPrincipal = GetPrincipalById(new ReadPrincipalCommand { Id = command.GroupId });
-            var theGroup = new Group(groupPrincipal.Id, groupPrincipal.Name);
-
-            thePrincipal.RemoveGroup(theGroup);
-            */
-        }
     }
 }
