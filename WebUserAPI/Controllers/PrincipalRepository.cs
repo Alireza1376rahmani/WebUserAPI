@@ -14,11 +14,14 @@ namespace WebUserAPI.Controllers
         public PrincipalRepository()
         {
             list = new Dictionary<Guid, Principal>();
+            var guid = Guid.NewGuid();
+            list.Add(guid, new User(guid, "default hastam"));
         }
 
         public void Create(Principal entity)
         {
             list.Add(entity.Id, entity);
+            Console.WriteLine();
         }
 
         public void Delete(Guid id)
@@ -36,7 +39,9 @@ namespace WebUserAPI.Controllers
 
         public Principal GetById(Guid id)
         {
-            return list[id];
+            if(list.ContainsKey(id))
+                return list[id];
+            return null;
         }
 
         public void Save() { }

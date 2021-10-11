@@ -16,15 +16,17 @@ namespace WebUserAPI.Controllers
             this.repository = repository;
         }
 
-        public void CreatePrincipal(CreatePrincipalCommand command)
+        public Guid CreatePrincipal(CreatePrincipalCommand command)
         {
             Principal principal;
+            var guid = Guid.NewGuid();
             if (command.Type == "user")
-                principal = new User(Guid.NewGuid(), command.Name);
+                principal = new User(guid, command.Name);
             else
-                principal = new Group(Guid.NewGuid(), command.Name);
+                principal = new Group(guid, command.Name);
             repository.Create(principal);
             repository.Save();
+            return guid;
         }
 
         public void UpdatePrincipal(UpdatePrincipalCommand command)

@@ -9,7 +9,7 @@ namespace WebUserAPI.Domain
     {
         public User(Guid id, string name) : base(id, name)
         {
-            Guard.Ensures(()=> name.Length > 9,nameof(name));
+            Guard.Ensures(()=> name.Length > 2,nameof(name));
         }
     }
 }
