@@ -54,7 +54,7 @@ namespace WebUserAPI.Controllers
         public IActionResult Update([FromBody] UpdatePrincipalCommand command)
         {
             principalService.UpdatePrincipal(command);
-            return Ok();
+            return Ok(command.Id);
         }
 
         [HttpDelete("{id}")]

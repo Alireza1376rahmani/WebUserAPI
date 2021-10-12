@@ -19,9 +19,6 @@ namespace SpecFlowProject.Steps
     [Binding]
     public class PrincipalManagementStepDefinition : IClassFixture<CustomWebApplicationFactory<TestStartup>>
     {
-
-        private readonly ScenarioContext _scenarioContext;
-
         private CreatePrincipalCommand command;
         private WebApplicationFactory<TestStartup> _factory;
         private Guid newPrincipalId;
@@ -96,6 +93,7 @@ namespace SpecFlowProject.Steps
             var putRelativeUri = new Uri("principal", UriKind.Relative);
             Response = await _client.PutAsJsonAsync(putRelativeUri, uCommand).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+            newPrincipalId = Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim());
         }
 
         [Then (@"I will find the principal with updated values")]
