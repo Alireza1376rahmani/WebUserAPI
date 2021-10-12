@@ -19,6 +19,9 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Principal>().ToTable("Principal");
+            modelBuilder.Entity<Principal>()
+                .HasMany(p => p.Groups)
+                .WithMany(b => b.Members);
         }
     }
 }

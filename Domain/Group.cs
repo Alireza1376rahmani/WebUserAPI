@@ -7,8 +7,11 @@ namespace Domain
 {
     public class Group : Principal
     {
-        public Group(Guid id, string name) : base(id, name)
+        public List<Principal> Members { get; set; }
+        public Group(Guid id, string name) : base(id, name) { }
+        public Group(Guid id, string name, List<Principal> Members) : base(id, name)
         {
+            this.Members = Members;
         }
     }
 }
