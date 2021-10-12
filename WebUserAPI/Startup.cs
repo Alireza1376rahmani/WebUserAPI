@@ -1,4 +1,5 @@
 using Domain;
+using InfraStructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,8 @@ namespace WebUserAPI
             services.AddSingleton<IRepository<Principal>, PrincipalRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
             services.AddScoped<IWeatherService, WeatherService>();
+            services.AddDbContext<MyContext>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

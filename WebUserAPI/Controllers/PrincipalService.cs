@@ -50,7 +50,8 @@ namespace WebUserAPI.Controllers
 
         public void DeletePrincipal(DeletePrincipalCommand command)
         {
-            repository.Delete(command.Id);
+            var principal = repository.GetById(command.Id);
+            repository.Delete(principal);
             repository.Save();
         }
 
@@ -58,22 +59,24 @@ namespace WebUserAPI.Controllers
         {
             var thePrincipal = repository.GetById(command.PrincipalId);
             var groupPrincipal = repository.GetById(command.GroupId);
-            var theGroup = new Group(groupPrincipal.Id, groupPrincipal.Name);
+           
 
-            thePrincipal.AddGroup(theGroup);
+            thePrincipal.AddGroup(groupPrincipal as Group);
 
             repository.Update(thePrincipal);
+            repository.Save();
         }
 
         public void PrincipalLeavesGroup(PrincipalLeavesGroupCommand command)
         {
             var thePrincipal = repository.GetById(command.PrincipalId);
             var groupPrincipal = repository.GetById(command.GroupId);
-            var theGroup = new Group(groupPrincipal.Id, groupPrincipal.Name);
+          
 
-            thePrincipal.RemoveGroup(theGroup);
+            thePrincipal.RemoveGroup(groupPrincipal as Group);
 
             repository.Update(thePrincipal);
+            repository.Save();
         }
     }
 }

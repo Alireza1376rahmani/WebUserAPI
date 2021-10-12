@@ -25,17 +25,16 @@ namespace WebUserAPI.Controllers
             Console.WriteLine();
         }
 
-        public void Delete(Guid id)
+  
+
+        public void Delete(Principal entity)
         {
-            list.Remove(id);
+            list.Remove(entity.Id);
         }
 
         public List<Principal> GetAll()
         {
-            List<Principal> copy = new List<Principal>();
-            foreach (var item in list)
-                copy.Add(item.Value);
-            return copy;
+            return list.Values.ToList();
         }
 
         public Principal GetById(Guid id)
@@ -45,12 +44,18 @@ namespace WebUserAPI.Controllers
             return null;
         }
 
+        public Principal GetByIdNoTrack(Guid id)
+        {
+            if (list.ContainsKey(id))
+                return list[id];
+            return null;
+        }
+
         public void Save() { }
 
         public void Update(Principal entity)
         {
-            list.Remove(entity.Id);
-            list.Add(entity.Id, entity);
+            list[entity.Id] = entity;
         }
 
     }

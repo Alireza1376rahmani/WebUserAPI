@@ -1,4 +1,5 @@
 ﻿using Domain;
+using InfraStructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,8 +25,9 @@ namespace SpecFlowProject
         {
             //services.AddDbContext<MyContext>();
             var assembly = typeof(PrincipalController).Assembly;
-            services.AddSingleton<IRepository<Domain.Principal>, PrincipalRepository>();
+            services.AddScoped<IRepository<Domain.Principal>, DBRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
+            services.AddDbContext<MyContext>();
             services.AddControllers()
                 .AddApplicationPart(assembly);
         }
