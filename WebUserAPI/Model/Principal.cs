@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebUserAPI.Model
 {
@@ -6,6 +7,7 @@ namespace WebUserAPI.Model
     {
         public string Name { get; set; }
         public string Type { get; set; }
+        public List<Guid> Groups { get; set; } = new List<Guid>();
     }
     public class UpdatePrincipalCommand
     {

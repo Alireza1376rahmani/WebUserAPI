@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data
+namespace InfraStructure.Data
 {
     public class MyContext : DbContext
     {
-        public DbSet<Principal> Users { get; set; }
+        public DbSet<Principal> Principals { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,10 +18,11 @@ namespace Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Principal>().ToTable("Principal");
             modelBuilder.Entity<Principal>()
                 .HasMany(p => p.Groups)
                 .WithMany(b => b.Members);
+            modelBuilder.Entity<Principal>()
+                .HasDiscriminator().HasValue<User>("User").HasValue<Group>("Group");
         }
     }
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
     public abstract class Principal : Entity
     {
+        [Required]
         public string Name { get; private set; }
         public List<Group> Groups { get; set; }
 
