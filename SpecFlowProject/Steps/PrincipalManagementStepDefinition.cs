@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Domain;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using WebUserAPI.Controllers;
-using WebUserAPI.Domain;
 using WebUserAPI.Model;
 using Xunit;
 
@@ -32,7 +32,7 @@ namespace SpecFlowProject.Steps
         private HttpClient _client { get; set; }
         protected HttpResponseMessage Response { get; set; }
 
-        public PrincipalManagementStepDefinition(CustomWebApplicationFactory<TestStartup> factory, ScenarioContext scenarioContext)
+        public PrincipalManagementStepDefinition(CustomWebApplicationFactory<TestStartup> factory)
         {
             _factory = factory.WithWebHostBuilder(builder => builder.ConfigureServices(services =>
             {
@@ -42,7 +42,7 @@ namespace SpecFlowProject.Steps
             {
                 BaseAddress = new Uri($"http://localhost/")
             });
-            _scenarioContext = scenarioContext;
+           
         }
 
         [Given(@"A Principal is defined as:")]

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
-using WebUserAPI.Domain;
 
 namespace WebUserAPI.Controllers
 {

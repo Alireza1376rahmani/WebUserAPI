@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Domain;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebUserAPI.Controllers;
-using WebUserAPI.Domain;
 
 namespace SpecFlowProject
 {
@@ -24,7 +24,7 @@ namespace SpecFlowProject
         {
             //services.AddDbContext<MyContext>();
             var assembly = typeof(PrincipalController).Assembly;
-            services.AddSingleton<IRepository<Principal>, PrincipalRepository>();
+            services.AddSingleton<IRepository<Domain.Principal>, PrincipalRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
             services.AddControllers()
                 .AddApplicationPart(assembly);

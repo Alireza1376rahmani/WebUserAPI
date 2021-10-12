@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebUserAPI.Domain;
+
 using WebUserAPI.Model;
 
 namespace WebUserAPI.Controllers

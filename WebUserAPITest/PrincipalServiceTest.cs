@@ -1,11 +1,11 @@
-﻿using Moq;
+﻿using Domain;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebUserAPI.Controllers;
-using WebUserAPI.Domain;
 using WebUserAPI.Model;
 using Xunit;
 

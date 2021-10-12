@@ -4,20 +4,20 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebUserAPI
+namespace Domain
 {
     public static class Guard
     {
         public static void Requires(Func<bool> predicate, string message)
         {
             if (predicate()) return;
-              throw new ArgumentException(message);
+            throw new ArgumentException(message);
         }
 
         [Conditional("DEBUG")]
         public static void Ensures(Func<bool> predicate, string message)
         {
-            Requires(predicate,"felan chiz length field"+ message);
+            Requires(predicate, "felan chiz length field" + message);
         }
     }
 }

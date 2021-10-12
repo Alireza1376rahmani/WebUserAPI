@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Domain;
+using System;
 using WebUserAPI.Controllers;
-using WebUserAPI.Domain;
 using WebUserAPI.Model;
 
 namespace WebUserAPI

@@ -7,8 +7,8 @@ using Xunit;
 using WebUserAPI;
 using WebUserAPI.Controllers;
 using Moq;
-using WebUserAPI.Domain;
 using WebUserAPI.Model;
+using Domain;
 
 namespace WebUserAPITest
 {

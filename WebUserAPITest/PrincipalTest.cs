@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using WebUserAPI;
-using WebUserAPI.Domain;
 using WebUserAPI.Model;
 using Moq;
 using WebUserAPI.Controllers;
+using Domain;
 
 namespace WebUserAPITest
 {
