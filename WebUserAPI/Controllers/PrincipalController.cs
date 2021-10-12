@@ -50,6 +50,20 @@ namespace WebUserAPI.Controllers
             return Ok(guid);
         }
 
+        [HttpPut]
+        public IActionResult Update([FromBody] UpdatePrincipalCommand command)
+        {
+            principalService.UpdatePrincipal(command);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            var command = new DeletePrincipalCommand { Id = id };
+            principalService.DeletePrincipal(command);
+            return Ok();
+        }
 
     }
 }

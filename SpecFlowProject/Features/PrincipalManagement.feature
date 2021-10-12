@@ -8,20 +8,20 @@ Scenario: Register a principal
 	And I get the principal by Id
 	Then I will find the principal
 
-Scenario: Update a user
-	Given A User is registerd as:
+Scenario: Update a principal
+	Given A principal is registered as:
 		| Name   |
 		| Hassan |
-	When I Update the user to:
+	When I Update the principal to:
 		| Name |
 		| Ali  |
-	And I get the user by Id
-	Then I will find the user with updated values
+	And I get the principal by Id
+	Then I will find the principal with updated values
 
 Scenario: Delete a user
-	Given A User is registerd as:
+	Given A principal is registered as:
 		| Name   |
 		| Hassan |
-	When I Delete the user:
-	And I get the user by Id
-	Then I will not find the user
+	When I Delete the principal
+	And I get the principal by Id
+	Then I will not find the principal

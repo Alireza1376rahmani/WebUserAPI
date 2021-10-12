@@ -72,11 +72,51 @@ namespace SpecFlowProject.Steps
         }
 
         [Then(@"I will find the principal")]
-        public void ThenTheResultShouldBe()
+        public void ThenIWillFindThePrincipal()
         {
             Assert.NotNull(principal);
             Assert.Equal(command.Name, principal.Name);
             Assert.Equal(newPrincipalId, principal.Id);
         }
+
+        [Given(@"A principal is registered as:")]
+        public async Task GivenAUserIsRegisteredAs(Table table)
+        {
+            GivenAPrincipalIsDefinedAs(table);
+            await WhenIRegisterThePrincipalAsync();
+        }
+
+        [When (@"I Update the principal to:")]
+        public async Task WhenIUpdateThePrincipalTo(Table table)
+        {
+            command = table.CreateInstance<CreatePrincipalCommand>();
+            UpdatePrincipalCommand uCommand = table.CreateInstance<UpdatePrincipalCommand>();
+            uCommand.Id = newPrincipalId;
+
+            var putRelativeUri = new Uri("principal", UriKind.Relative);
+            Response = await _client.PutAsJsonAsync(putRelativeUri, uCommand).ConfigureAwait(false);
+            Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+        }
+
+        [Then (@"I will find the principal with updated values")]
+        public void ThenIWillFindThePrincipalWithUpdatedValues()
+        {
+            ThenIWillFindThePrincipal();
+        }
+
+        [When (@"I Delete the principal")]
+        public async Task WhenIDeleteThePrincipal()
+        {
+            var deleteRelativeUri = new Uri($"principal/{{{newPrincipalId}}}", UriKind.Relative);
+            Response = await _client.DeleteAsync(deleteRelativeUri).ConfigureAwait(false);
+            Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+        }
+
+        [Then(@"I will not find the principal")]
+        public void ThenIWillNotFindThePrincipal()
+        {
+            Assert.Null(principal);
+        }
+
     }
 }
