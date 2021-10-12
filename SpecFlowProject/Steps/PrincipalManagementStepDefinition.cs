@@ -68,7 +68,7 @@ namespace SpecFlowProject.Steps
         public async Task WhenIGetThePrincipalByIdAsync()
         {
             var getRelativeUri = new Uri($"Principal/{{{newPrincipalId}}}",UriKind.Relative);
-            try { principal = await _client.GetFromJsonAsync<User>(getRelativeUri); } catch { principal = new User(Guid.NewGuid(), "FAKE"); }
+            try { principal = await _client.GetFromJsonAsync<User>(getRelativeUri); } catch { principal = null; }
         }
 
         [Then(@"I will find the principal")]
