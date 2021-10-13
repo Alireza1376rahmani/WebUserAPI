@@ -2,9 +2,6 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebUserAPI.Controllers;
 using WebUserAPI.Model;
 using Xunit;
@@ -26,6 +23,9 @@ namespace WebUserAPITest
         {
             SOME_USER = new User(Guid.Parse(SOME_GUID), SOME_NAME);
             mockRepo = new Mock<IRepository<Principal>>();
+            mockRepo.Setup(x => x.Save());
+            mockRepo.Setup(x => x.GetById<Principal>(It.IsAny<Guid>())).Returns<Guid>(id => new Group(id, SOME_NAME));
+
             sut = new PrincipalService(mockRepo.Object);
         }
 
@@ -40,7 +40,6 @@ namespace WebUserAPITest
                 Id = Guid.Parse(SOME_GUID)
             };
             mockRepo.Setup(x => x.Update(It.IsAny<User>()));
-            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(SOME_USER);
             #endregion
 
             #region Act
@@ -48,8 +47,8 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Update(SOME_USER), Times.Once);
-            mockRepo.Verify(x => x.GetById(Guid.Parse(SOME_GUID)), Times.Once);
+            mockRepo.Verify(x => x.Update(It.Is<Principal>(p=>p.Id == command.Id)), Times.Once);
+            mockRepo.Verify(x => x.GetById<Principal>(Guid.Parse(SOME_GUID)), Times.Once);
             mockRepo.Verify(x => x.Save());
             #endregion
         }
@@ -86,7 +85,6 @@ namespace WebUserAPITest
             {
                 Id = Guid.Parse(SOME_GUID)
             };
-            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns<Guid>(x => new User(x, SOME_NAME));
             var expectedId = Guid.Parse(SOME_GUID);
             #endregion
 
@@ -115,12 +113,8 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            Action verify = () =>
-            {
-              //  mockRepo.Verify(x => x.Delete(Guid.Parse(SOME_GUID)));
-                mockRepo.Verify(x => x.Save());
-            };
-            Assert.Null(Record.Exception(verify));
+            mockRepo.Verify(x => x.Delete(It.Is<Principal>(principal => principal.Id == command.Id)));
+            mockRepo.Verify(x => x.Save());
             #endregion
         }
 
@@ -134,7 +128,6 @@ namespace WebUserAPITest
                 PrincipalId = Guid.Parse(SOME_GUID),
                 GroupId = givenGroupId
             };
-            mockRepo.Setup(x => x.GetById(It.IsAny<Guid>())).Returns<Guid>(id => new Group(id, SOME_NAME));
             mockRepo.Setup(x => x.Update(It.IsAny<Principal>()));
             #endregion
 
@@ -159,7 +152,6 @@ namespace WebUserAPITest
                 PrincipalId = Guid.Parse(SOME_GUID),
                 GroupId = givenGroupId
             };
-            mockRepo.Setup(x=>x.GetById(It.IsAny<Guid>())).Returns<Guid>(x=> new Group(x,SOME_NAME));
             #endregion
 
             #region Act

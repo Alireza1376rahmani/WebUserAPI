@@ -10,11 +10,13 @@ namespace InfraStructure.Data
 {
     public class MyContext : DbContext
     {
-        public DbSet<Principal> Users { get; set; }
+        public DbSet<Principal> Principals { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=FirstTest;Integrated Security=True;MultipleActiveResultSets=True;Application Name=TrainingApp");
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=SecondTest;Integrated Security=True;MultipleActiveResultSets=True;Application Name=TrainingApp");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

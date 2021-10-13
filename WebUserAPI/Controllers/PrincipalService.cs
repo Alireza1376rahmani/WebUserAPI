@@ -32,7 +32,7 @@ namespace WebUserAPI.Controllers
 
         public void UpdatePrincipal(UpdatePrincipalCommand command)
         {
-            var principal = repository.GetById(command.Id);
+            var principal = repository.GetById<Principal>(command.Id);
             principal.UpdateName(command.Name);
             repository.Update(principal);
             repository.Save();
@@ -45,23 +45,22 @@ namespace WebUserAPI.Controllers
 
         public Principal GetPrincipalById(ReadPrincipalCommand command)
         {
-            return repository.GetById(command.Id);
+            return repository.GetById<Principal>(command.Id);
         }
 
         public void DeletePrincipal(DeletePrincipalCommand command)
         {
-            var principal = repository.GetById(command.Id);
+            var principal = repository.GetById<Principal>(command.Id);
             repository.Delete(principal);
             repository.Save();
         }
 
         public void PrincipalJoinsToGroup(PrincipalJoinsToGroupCommand command)
         {
-            var thePrincipal = repository.GetById(command.PrincipalId);
-            var groupPrincipal = repository.GetById(command.GroupId);
-           
+            var thePrincipal = repository.GetById<Principal>(command.PrincipalId);
+            var theGroup = repository.GetById<Group>(command.GroupId);
 
-            thePrincipal.AddGroup(groupPrincipal as Group);
+            thePrincipal.AddGroup(theGroup);
 
             repository.Update(thePrincipal);
             repository.Save();
@@ -69,11 +68,10 @@ namespace WebUserAPI.Controllers
 
         public void PrincipalLeavesGroup(PrincipalLeavesGroupCommand command)
         {
-            var thePrincipal = repository.GetById(command.PrincipalId);
-            var groupPrincipal = repository.GetById(command.GroupId);
-          
+            var thePrincipal = repository.GetById<Principal>(command.PrincipalId);
+            var theGroup = repository.GetById<Group>(command.GroupId);
 
-            thePrincipal.RemoveGroup(groupPrincipal as Group);
+            thePrincipal.RemoveGroup(theGroup);
 
             repository.Update(thePrincipal);
             repository.Save();

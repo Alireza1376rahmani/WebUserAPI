@@ -22,10 +22,7 @@ namespace WebUserAPI.Controllers
         public void Create(Principal entity)
         {
             list.Add(entity.Id, entity);
-            Console.WriteLine();
         }
-
-  
 
         public void Delete(Principal entity)
         {
@@ -37,17 +34,19 @@ namespace WebUserAPI.Controllers
             return list.Values.ToList();
         }
 
-        public Principal GetById(Guid id)
+        public TSubEntity GetById<TSubEntity>(Guid id)
+            where TSubEntity : Principal
         {
             if(list.ContainsKey(id))
-                return list[id];
+                return list[id] as TSubEntity;
             return null;
         }
 
-        public Principal GetByIdNoTrack(Guid id)
+        public TSubEntity GetByIdNoTrack<TSubEntity>(Guid id)
+            where TSubEntity : Principal
         {
             if (list.ContainsKey(id))
-                return list[id];
+                return list[id] as TSubEntity;
             return null;
         }
 

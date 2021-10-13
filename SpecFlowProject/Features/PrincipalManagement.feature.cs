@@ -19,7 +19,7 @@ namespace SpecFlowProject.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class PrincipalManagementFeature : object, Xunit.IClassFixture<PrincipalManagementFeature.FixtureData>, System.IDisposable
+    public partial class UserManagementFeature : object, Xunit.IClassFixture<UserManagementFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace SpecFlowProject.Features
 #line 1 "PrincipalManagement.feature"
 #line hidden
         
-        public PrincipalManagementFeature(PrincipalManagementFeature.FixtureData fixtureData, SpecFlowProject_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public UserManagementFeature(UserManagementFeature.FixtureData fixtureData, SpecFlowProject_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace SpecFlowProject.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Principal Management", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "user Management", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace SpecFlowProject.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Register a principal")]
-        [Xunit.TraitAttribute("FeatureTitle", "Principal Management")]
-        [Xunit.TraitAttribute("Description", "Register a principal")]
-        public virtual void RegisterAPrincipal()
+        [Xunit.SkippableFactAttribute(DisplayName="Register a user")]
+        [Xunit.TraitAttribute("FeatureTitle", "user Management")]
+        [Xunit.TraitAttribute("Description", "Register a user")]
+        public virtual void RegisterAUser()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register a principal", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register a user", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -113,29 +113,29 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Hassan"});
 #line 4
- testRunner.Given("A Principal is defined as:", ((string)(null)), table1, "Given ");
+ testRunner.Given("A user is defined as:", ((string)(null)), table1, "Given ");
 #line hidden
 #line 7
- testRunner.When("I register the principal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I register the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
- testRunner.And("I get the principal by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
- testRunner.Then("I will find the principal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will find the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update a principal")]
-        [Xunit.TraitAttribute("FeatureTitle", "Principal Management")]
-        [Xunit.TraitAttribute("Description", "Update a principal")]
-        public virtual void UpdateAPrincipal()
+        [Xunit.SkippableFactAttribute(DisplayName="Update a user")]
+        [Xunit.TraitAttribute("FeatureTitle", "user Management")]
+        [Xunit.TraitAttribute("Description", "Update a user")]
+        public virtual void UpdateAUser()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update a principal", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update a user", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -161,27 +161,27 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "Hassan"});
 #line 12
- testRunner.Given("A principal is registered as:", ((string)(null)), table2, "Given ");
+ testRunner.Given("A user is registered as:", ((string)(null)), table2, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table3.AddRow(new string[] {
                             "Ali"});
 #line 15
- testRunner.When("I Update the principal to:", ((string)(null)), table3, "When ");
+ testRunner.When("I Update the user to:", ((string)(null)), table3, "When ");
 #line hidden
 #line 18
- testRunner.And("I get the principal by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 19
- testRunner.Then("I will find the principal with updated values", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will find the user with updated values", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Delete a user")]
-        [Xunit.TraitAttribute("FeatureTitle", "Principal Management")]
+        [Xunit.TraitAttribute("FeatureTitle", "user Management")]
         [Xunit.TraitAttribute("Description", "Delete a user")]
         public virtual void DeleteAUser()
         {
@@ -213,16 +213,75 @@ this.ScenarioInitialize(scenarioInfo);
                 table4.AddRow(new string[] {
                             "Hassan"});
 #line 22
- testRunner.Given("A principal is registered as:", ((string)(null)), table4, "Given ");
+ testRunner.Given("A user is registered as:", ((string)(null)), table4, "Given ");
 #line hidden
 #line 25
- testRunner.When("I Delete the principal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I Delete the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 26
- testRunner.And("I get the principal by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 27
- testRunner.Then("I will not find the principal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I will not find the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Register a User with groups")]
+        [Xunit.TraitAttribute("FeatureTitle", "user Management")]
+        [Xunit.TraitAttribute("Description", "Register a User with groups")]
+        public virtual void RegisterAUserWithGroups()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register a User with groups", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 29
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Groups"});
+                table5.AddRow(new string[] {
+                            "Group1",
+                            ""});
+#line 30
+ testRunner.Given("A Group is registered as:", ((string)(null)), table5, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Groups"});
+                table6.AddRow(new string[] {
+                            "Hassan",
+                            "Group1"});
+#line 33
+ testRunner.And("A user with groups is defined as:", ((string)(null)), table6, "And ");
+#line hidden
+#line 36
+ testRunner.When("I register the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 37
+ testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 38
+ testRunner.Then("I will find the user with his groups", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -235,12 +294,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                PrincipalManagementFeature.FeatureSetup();
+                UserManagementFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                PrincipalManagementFeature.FeatureTearDown();
+                UserManagementFeature.FeatureTearDown();
             }
         }
     }

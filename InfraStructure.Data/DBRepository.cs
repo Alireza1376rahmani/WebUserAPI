@@ -19,27 +19,27 @@ namespace InfraStructure.Data
 
         public void Create(Principal entity)
         {
-            ctx.Users.Add(entity);
+            ctx.Principals.Add(entity);
         }
 
         public void Delete(Principal entity)
         {
-            ctx.Users.Remove(entity);
+            ctx.Principals.Remove(entity);
         }
 
         public List<Principal> GetAll()
         {
-            return ctx.Users.AsNoTracking().ToList();
+            return ctx.Principals.AsNoTracking().ToList();
         }
 
-        public Principal GetById(Guid id)
+        public TSubEntity GetById<TSubEntity>(Guid id) where TSubEntity : Principal
         {
-            return ctx.Users.FirstOrDefault(p => p.Id == id);
+            return ctx.Users.FirstOrDefault(p => p.Id == id) as TSubEntity;
         }
 
-        public Principal GetByIdNoTrack(Guid id)
+        public TSubEntity GetByIdNoTrack<TSubEntity>(Guid id) where TSubEntity : Principal
         {
-            return ctx.Users.AsNoTracking().FirstOrDefault(p => p.Id == id);
+            return ctx.Users.AsNoTracking().FirstOrDefault(p => p.Id == id) as TSubEntity;
         }
 
         public void Save()
@@ -47,9 +47,6 @@ namespace InfraStructure.Data
             ctx.SaveChanges();
         }
 
-        public void Update(Principal entity)
-        {
-            
-        }
+        public void Update(Principal entity) { }
     }
 }

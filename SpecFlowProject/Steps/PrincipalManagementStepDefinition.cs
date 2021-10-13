@@ -45,11 +45,16 @@ namespace SpecFlowProject.Steps
            
         }
 
-        [Given(@"A Principal is defined as:")]
-        public void GivenAPrincipalIsDefinedAs(Table table)
+        public void GivenAPrincipalIsDefinedAs(Table table, string type)
         {
             command = table.CreateInstance<CreatePrincipalCommand>();
-            command.Type = "user";
+            command.Type = type;
+        }
+
+        [Given(@"A user is defined as:")]
+        public void GivenAUserIsDefinedAs(Table table)
+        {
+            GivenAPrincipalIsDefinedAs(table, "user");
         }
 
         [When(@"I register the principal")]
@@ -61,14 +66,14 @@ namespace SpecFlowProject.Steps
             newPrincipalId = Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim());
         }
 
-        [When(@"I get the principal by Id")]
+        [When(@"I get the user by Id")]
         public async Task WhenIGetThePrincipalByIdAsync()
         {
             var getRelativeUri = new Uri($"Principal/{{{newPrincipalId}}}",UriKind.Relative);
             try { principal = await _client.GetFromJsonAsync<User>(getRelativeUri); } catch { principal = null; }
         }
 
-        [Then(@"I will find the principal")]
+        [Then(@"I will find the user")]
         public void ThenIWillFindThePrincipal()
         {
             Assert.NotNull(principal);
@@ -76,14 +81,14 @@ namespace SpecFlowProject.Steps
             Assert.Equal(newPrincipalId, principal.Id);
         }
 
-        [Given(@"A principal is registered as:")]
+        [Given(@"A user is registered as:")]
         public async Task GivenAUserIsRegisteredAs(Table table)
         {
-            GivenAPrincipalIsDefinedAs(table);
+            GivenAPrincipalIsDefinedAs(table, "user");
             await WhenIRegisterThePrincipalAsync();
         }
 
-        [When (@"I Update the principal to:")]
+        [When (@"I Update the user to:")]
         public async Task WhenIUpdateThePrincipalTo(Table table)
         {
             command = table.CreateInstance<CreatePrincipalCommand>();
@@ -96,13 +101,13 @@ namespace SpecFlowProject.Steps
             newPrincipalId = Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim());
         }
 
-        [Then (@"I will find the principal with updated values")]
+        [Then (@"I will find the user with updated values")]
         public void ThenIWillFindThePrincipalWithUpdatedValues()
         {
             ThenIWillFindThePrincipal();
         }
 
-        [When (@"I Delete the principal")]
+        [When (@"I Delete the user")]
         public async Task WhenIDeleteThePrincipal()
         {
             var deleteRelativeUri = new Uri($"principal/{{{newPrincipalId}}}", UriKind.Relative);
@@ -110,11 +115,36 @@ namespace SpecFlowProject.Steps
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
         }
 
-        [Then(@"I will not find the principal")]
+        [Then(@"I will not find the user")]
         public void ThenIWillNotFindThePrincipal()
         {
             Assert.Null(principal);
         }
+
+        [When(@"I register the user")]
+        public async Task WhenIRegisterTheUser() {
+            await WhenIRegisterThePrincipalAsync();
+        }
+
+        [Given(@"A Group is registered as:")]
+        public async Task GivenAGroupIsRegisteredAs(Table table)
+        {
+            GivenAPrincipalIsDefinedAs(table, "group");
+            await WhenIRegisterThePrincipalAsync();
+        }
+
+        [Given(@"A user with groups is defined as:")]
+        public void GivenAUserWithGroupsIsDefinedAs(Table table)
+        {
+            
+        }
+
+        [Then(@"I will find the user with his groups")]
+        public void ThenIWillFindTheUserWithHisGroups()
+        {
+            
+        }
+
 
     }
 }

@@ -22,7 +22,7 @@ namespace WebUserAPI
 
         public void UpdateGroup(UpdatePrincipalCommand command)
         {
-            var group = repo.GetById(command.Id);
+            var group = repo.GetById<Group>(command.Id);
             group.UpdateName(command.Name);
             repo.Update(group);
             repo.Save();

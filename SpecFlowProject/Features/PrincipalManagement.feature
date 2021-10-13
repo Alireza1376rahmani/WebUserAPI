@@ -1,27 +1,38 @@
-﻿Feature: Principal Management
+﻿Feature: user Management
 
-Scenario: Register a principal
-	Given A Principal is defined as:
+Scenario: Register a user
+	Given A user is defined as:
 		| Name   |
 		| Hassan |
-	When I register the principal
-	And I get the principal by Id
-	Then I will find the principal
+	When I register the user
+	And I get the user by Id
+	Then I will find the user
 
-Scenario: Update a principal
-	Given A principal is registered as:
+Scenario: Update a user
+	Given A user is registered as:
 		| Name   |
 		| Hassan |
-	When I Update the principal to:
+	When I Update the user to:
 		| Name |
 		| Ali  |
-	And I get the principal by Id
-	Then I will find the principal with updated values
+	And I get the user by Id
+	Then I will find the user with updated values
 
 Scenario: Delete a user
-	Given A principal is registered as:
+	Given A user is registered as:
 		| Name   |
 		| Hassan |
-	When I Delete the principal
-	And I get the principal by Id
-	Then I will not find the principal
+	When I Delete the user
+	And I get the user by Id
+	Then I will not find the user
+
+Scenario: Register a User with groups
+	Given A Group is registered as:
+		| Name   | Groups |
+		| Group1 |        |
+	And A user with groups is defined as:
+		| Name   | Groups |
+		| Hassan | Group1 |    
+	When I register the user
+	And I get the user by Id
+	Then I will find the user with his groups
