@@ -38,7 +38,7 @@ namespace WebUserAPI.Controllers
         public IActionResult Get(Guid id)
         {
             var command = new ReadPrincipalCommand { Id = id };
-            var principal = (User)principalService.GetPrincipalById(command);
+            var principal = principalService.GetPrincipalById(command);
             if (principal == null) return NotFound();
             return Ok(principal);
         }
@@ -48,6 +48,20 @@ namespace WebUserAPI.Controllers
         {
             var guid = principalService.CreatePrincipal(command);
             return Ok(guid);
+        }
+
+        [HttpPut("join")]
+        public IActionResult Update([FromBody] PrincipalJoinsToGroupCommand command)
+        {
+            principalService.PrincipalJoinsToGroup(command);
+            return Ok();
+        }
+
+        [HttpPut("leave")]
+        public IActionResult Update([FromBody] PrincipalLeavesGroupCommand command)
+        {
+            principalService.PrincipalJoinsToGroup(command);
+            return Ok();
         }
 
         [HttpPut]

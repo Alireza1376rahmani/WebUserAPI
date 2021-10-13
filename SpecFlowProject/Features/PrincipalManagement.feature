@@ -32,7 +32,18 @@ Scenario: Register a User with groups
 		| Group1 |        |
 	And A user with groups is defined as:
 		| Name   | Groups |
-		| Hassan | Group1 |    
+		| Hassan | Group1 |
 	When I register the user
 	And I get the user by Id
 	Then I will find the user with his groups
+
+Scenario: a User joins to a group
+	Given A user is registered as:
+		| Name  |
+		| gholi |
+	And A Group is registered as:
+		| Name |
+		| gp1  |
+	When I join the user to the group
+	And I get the user by Id
+	Then I will find the user with the group
