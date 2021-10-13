@@ -117,7 +117,7 @@ namespace SpecFlowProject.Steps
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
         }
 
-        [Then(@"I will not find  the user")]
+        [Then(@"I will not find the user")]
         public void ThenIWillNotFindThePrincipal()
         {
             Assert.Null(principal);
