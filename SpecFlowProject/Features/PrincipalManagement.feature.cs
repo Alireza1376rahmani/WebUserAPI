@@ -260,19 +260,19 @@ this.ScenarioInitialize(scenarioInfo);
                             "Name",
                             "Groups"});
                 table5.AddRow(new string[] {
-                            "Group1",
-                            ""});
+                            "Hassan",
+                            "Group1"});
 #line 30
- testRunner.Given("A Group is registered as:", ((string)(null)), table5, "Given ");
+ testRunner.Given("A user with groups is defined as:", ((string)(null)), table5, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Groups"});
                 table6.AddRow(new string[] {
-                            "Hassan",
-                            "Group1"});
+                            "Group1",
+                            ""});
 #line 33
- testRunner.And("A user with groups is defined as:", ((string)(null)), table6, "And ");
+ testRunner.And("A Group is registered as:", ((string)(null)), table6, "And ");
 #line hidden
 #line 36
  testRunner.When("I register the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -337,6 +337,64 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 49
  testRunner.Then("I will find the user with the group", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="a User leaves a group")]
+        [Xunit.TraitAttribute("FeatureTitle", "user Management")]
+        [Xunit.TraitAttribute("Description", "a User leaves a group")]
+        public virtual void AUserLeavesAGroup()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("a User leaves a group", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 51
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table9.AddRow(new string[] {
+                            "gholi"});
+#line 52
+ testRunner.Given("A user is registered as:", ((string)(null)), table9, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table10.AddRow(new string[] {
+                            "gp1"});
+#line 55
+ testRunner.And("A Group is registered as:", ((string)(null)), table10, "And ");
+#line hidden
+#line 58
+ testRunner.And("the user is in group", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 59
+ testRunner.When("I leave the user from group", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 60
+ testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 61
+ testRunner.Then("I will not find the group in groups of user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

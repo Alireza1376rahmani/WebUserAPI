@@ -60,7 +60,7 @@ namespace WebUserAPI.Controllers
         [HttpPut("leave")]
         public IActionResult Update([FromBody] PrincipalLeavesGroupCommand command)
         {
-            principalService.PrincipalJoinsToGroup(command);
+            principalService.PrincipalLeavesGroup(command);
             return Ok();
         }
 
