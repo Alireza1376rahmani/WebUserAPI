@@ -19,17 +19,32 @@ namespace InfraStructure.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Domain.Membership", b =>
+                {
+                    b.Property<Guid>("PrincipalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PrincipalId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Memberships");
+                });
+
             modelBuilder.Entity("Domain.Principal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("principal_type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -37,51 +52,57 @@ namespace InfraStructure.Data.Migrations
 
                     b.ToTable("Principals");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Principal");
-                });
-
-            modelBuilder.Entity("GroupPrincipal", b =>
-                {
-                    b.Property<Guid>("GroupsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MembersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("GroupsId", "MembersId");
-
-                    b.HasIndex("MembersId");
-
-                    b.ToTable("GroupPrincipal");
+                    b.HasDiscriminator<string>("principal_type").HasValue("Principal");
                 });
 
             modelBuilder.Entity("Domain.Group", b =>
                 {
                     b.HasBaseType("Domain.Principal");
 
-                    b.HasDiscriminator().HasValue("Group");
+                    b.Property<Guid?>("PrincipalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("PrincipalId");
+
+                    b.HasDiscriminator().HasValue("group");
                 });
 
             modelBuilder.Entity("Domain.User", b =>
                 {
                     b.HasBaseType("Domain.Principal");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasDiscriminator().HasValue("user");
                 });
 
-            modelBuilder.Entity("GroupPrincipal", b =>
+            modelBuilder.Entity("Domain.Membership", b =>
                 {
-                    b.HasOne("Domain.Group", null)
+                    b.HasOne("Domain.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupsId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Principal", null)
+                    b.HasOne("Domain.Principal", "Principal")
                         .WithMany()
-                        .HasForeignKey("MembersId")
+                        .HasForeignKey("PrincipalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Principal");
+                });
+
+            modelBuilder.Entity("Domain.Group", b =>
+                {
+                    b.HasOne("Domain.Principal", null)
+                        .WithMany("Groups")
+                        .HasForeignKey("PrincipalId");
+                });
+
+            modelBuilder.Entity("Domain.Principal", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,14 +20,11 @@ namespace SpecFlowProject.Steps
     public class PrincipalManagementStepDefinition : IClassFixture<CustomWebApplicationFactory<TestStartup>>
     {
         private CreatePrincipalCommand command;
+        Group theGroup;
+        private CreatePrincipalWithGroupsCommand byGroupCommand;
         private WebApplicationFactory<TestStartup> _factory;
         private List<Guid> _identifiers;
         private Principal principal = null;
-
-        //public PrincipalManagementStepDefinition(ScenarioContext scenarioContext)
-        //{
-        //    _scenarioContext = scenarioContext;
-        //}
 
         private HttpClient _client { get; set; }
         protected HttpResponseMessage Response { get; set; }
@@ -134,12 +131,7 @@ namespace SpecFlowProject.Steps
         {
             GivenAPrincipalIsDefinedAs(table, "group");
             await WhenIRegisterThePrincipalAsync();
-        }
-
-        [Given(@"A user with groups is defined as:")]
-        public void GivenAUserWithGroupsIsDefinedAs(Table table)
-        {
-
+            theGroup = new Group(_identifiers[0], command.Name);
         }
 
         [When(@"I join the user to the group")]
@@ -147,7 +139,7 @@ namespace SpecFlowProject.Steps
         {
             var userId = _identifiers[0];
             var groupId = _identifiers[1];
-             var jCommand = new PrincipalJoinsToGroupCommand
+            var jCommand = new PrincipalJoinsToGroupCommand
             {
                 GroupId = groupId,
                 PrincipalId = userId
@@ -192,11 +184,32 @@ namespace SpecFlowProject.Steps
         public void ThenIWillNotFindTheGroupInGroupsOfUser()
         {
             Assert.NotNull(principal);
-            Assert.Equal(_identifiers[0],principal.Id);
-            Assert.Null(principal.Groups.Find(g=> g.Id == _identifiers[1]));
+            Assert.Equal(_identifiers[0], principal.Id);
+            Assert.Null(principal.Groups.Find(g => g.Id == _identifiers[1]));
         }
 
+        [Given(@"A user with groups is defined as:")]
+        public void GivenAUserWithGroupsIsDefinedAs(Table table)
+        {
+            byGroupCommand = table.CreateInstance<CreatePrincipalWithGroupsCommand>();
+            byGroupCommand.groups.Clear();
+            byGroupCommand.groups.Add(theGroup);
+            byGroupCommand.Type = "group";
+        }
 
+        [Then(@"I will find the user with his groups")]
+        public void ThenIWillFindTheUserWithHisGroups()
+        {
+        }
+
+        [When(@"I register the user with given group")]
+        public async Task WhenIRegisterTheUserWithGivenGroup()
+        {
+            var postRelativeUri = new Uri("principal/groups", UriKind.Relative);
+            Response = await _client.PostAsJsonAsync(postRelativeUri, byGroupCommand).ConfigureAwait(false);
+            Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+            _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
+        }
 
 
     }

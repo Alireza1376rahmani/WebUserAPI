@@ -13,5 +13,6 @@ namespace Domain
         List<TEntity> GetAll();
         void Delete(TEntity entity);
         public void Save();
+        List<Group> getGroupsOf(Guid id);
     }
 }

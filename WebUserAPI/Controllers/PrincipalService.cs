@@ -76,5 +76,27 @@ namespace WebUserAPI.Controllers
             repository.Update(thePrincipal);
             repository.Save();
         }
+
+        public List<Group> getAllGroups(Guid id)
+        {
+            return repository.getGroupsOf(id);
+        }
+        public Guid CreatePrincipalWithGroups(CreatePrincipalWithGroupsCommand command)
+        {
+            Principal principal;
+            var guid = Guid.NewGuid();
+            if (command.Type == "user")
+                principal = new User(guid, command.Name, command.groups);
+            else
+                principal = new Group(guid, command.Name, command.groups);
+            repository.Create(principal);
+            repository.Save();
+            return guid;
+        }
+
+        public void UpdatePrincipal(PatchCommand command)
+        {
+            
+        }
     }
 }

@@ -11,18 +11,28 @@ namespace InfraStructure.Data
     public class MyContext : DbContext
     {
         public DbSet<Principal> Principals { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=SecondTest;Integrated Security=True;MultipleActiveResultSets=True;Application Name=TrainingApp");
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=FirstTest;Integrated Security=True;MultipleActiveResultSets=True;Application Name=TrainingApp");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Principal>()
-                .HasMany(p => p.Groups)
-                .WithMany(b => b.Members);
+                .HasDiscriminator<string>("principal_type")
+                .HasValue<User>("user")
+                .HasValue<Group>("group");
+
+            modelBuilder.Entity<Membership>().HasKey(m => new { m.PrincipalId, m.GroupId });
+
+            modelBuilder.Entity<Membership>()
+                .HasOne<Principal>(m => m.Principal)
+                .WithMany();
+
+            modelBuilder.Entity<Membership>()
+                .HasOne<Group>(m => m.Group)
+                .WithMany();
         }
     }
 }

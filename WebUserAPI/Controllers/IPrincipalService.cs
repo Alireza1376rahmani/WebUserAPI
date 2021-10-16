@@ -14,5 +14,8 @@ namespace WebUserAPI.Controllers
         void PrincipalJoinsToGroup(PrincipalJoinsToGroupCommand command);
         void PrincipalLeavesGroup(PrincipalLeavesGroupCommand command);
         void UpdatePrincipal(UpdatePrincipalCommand command);
+        List<Group> getAllGroups(Guid id);
+        Guid CreatePrincipalWithGroups(CreatePrincipalWithGroupsCommand command);
+        void UpdatePrincipal(PatchCommand command);
     }
 }

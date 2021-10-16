@@ -23,9 +23,9 @@ namespace SpecFlowProject
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<MyContext>();
+            services.AddDbContext<MyContext>();
             var assembly = typeof(PrincipalController).Assembly;
-            services.AddSingleton<IRepository<Principal>, PrincipalRepository>();
+            services.AddSingleton<IRepository<Principal>, DBRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
             services.AddControllers()
                 .AddApplicationPart(assembly);

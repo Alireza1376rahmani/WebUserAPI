@@ -50,19 +50,12 @@ namespace WebUserAPI.Controllers
             return Ok(guid);
         }
 
-        [HttpPut("join")]
-        public IActionResult Update([FromBody] PrincipalJoinsToGroupCommand command)
+        [HttpPatch("{id}")]
+        public IActionResult Patch(Guid id,[FromBody] PatchCommand command)
         {
-            principalService.PrincipalJoinsToGroup(command);
-            return Ok();
+            principalService.UpdatePrincipal(command);
         }
 
-        [HttpPut("leave")]
-        public IActionResult Update([FromBody] PrincipalLeavesGroupCommand command)
-        {
-            principalService.PrincipalLeavesGroup(command);
-            return Ok();
-        }
 
         [HttpPut]
         public IActionResult Update([FromBody] UpdatePrincipalCommand command)
@@ -77,6 +70,21 @@ namespace WebUserAPI.Controllers
             var command = new DeletePrincipalCommand { Id = id };
             principalService.DeletePrincipal(command);
             return Ok();
+        }
+
+        [HttpGet("groups/{id}")]
+        [Produces(typeof(Principal))]
+        public IActionResult GetAll(Guid id)
+        {
+            var groups = principalService.getAllGroups(id);
+            return Ok(groups);
+        }
+
+        [HttpPost("groups")]
+        public IActionResult CreateWithGroups([FromBody] CreatePrincipalWithGroupsCommand command)
+        {
+            var guid = principalService.CreatePrincipalWithGroups(command);
+            return Ok(guid);
         }
 
     }

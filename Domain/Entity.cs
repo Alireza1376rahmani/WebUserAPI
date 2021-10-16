@@ -9,7 +9,7 @@ namespace Domain
     {
         public Guid Id { get; protected set; }
 
-
+        public Entity() {}
         public Entity(Guid id)
         {
             Id = id;

@@ -1,7 +1,14 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Domain;
+using System;
 
 namespace WebUserAPI.Model
 {
+    public enum PrincipalPatchType
+    {
+        JoinToGroup,LeaveGroup
+    }
+
     public class CreatePrincipalCommand
     {
         public string Name { get; set; }
@@ -26,4 +33,14 @@ namespace WebUserAPI.Model
         public Guid GroupId { get; set; }
     }
     public class PrincipalLeavesGroupCommand : PrincipalJoinsToGroupCommand { }
+    public class CreatePrincipalWithGroupsCommand : CreatePrincipalCommand
+    {
+        public List<Guid> groups { get; set; }
+    }
+    public class PatchCommand
+    {
+        public PrincipalPatchType Type { get; set; }
+        public List<Guid> Groups { get; set; }
+    }
 }
+

@@ -111,7 +111,7 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table1.AddRow(new string[] {
-                            "Hassan"});
+                            "rUser"});
 #line 4
  testRunner.Given("A user is defined as:", ((string)(null)), table1, "Given ");
 #line hidden
@@ -159,14 +159,14 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table2.AddRow(new string[] {
-                            "Hassan"});
+                            "uUser"});
 #line 12
  testRunner.Given("A user is registered as:", ((string)(null)), table2, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table3.AddRow(new string[] {
-                            "Ali"});
+                            "updatedUser"});
 #line 15
  testRunner.When("I Update the user to:", ((string)(null)), table3, "When ");
 #line hidden
@@ -211,7 +211,7 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table4.AddRow(new string[] {
-                            "Hassan"});
+                            "dUser"});
 #line 22
  testRunner.Given("A user is registered as:", ((string)(null)), table4, "Given ");
 #line hidden
@@ -260,22 +260,22 @@ this.ScenarioInitialize(scenarioInfo);
                             "Name",
                             "Groups"});
                 table5.AddRow(new string[] {
-                            "Hassan",
-                            "Group1"});
+                            "hisGroups",
+                            ""});
 #line 30
- testRunner.Given("A user with groups is defined as:", ((string)(null)), table5, "Given ");
+ testRunner.Given("A Group is registered as:", ((string)(null)), table5, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Groups"});
                 table6.AddRow(new string[] {
-                            "Group1",
-                            ""});
+                            "Hassan",
+                            "Group1"});
 #line 33
- testRunner.And("A Group is registered as:", ((string)(null)), table6, "And ");
+ testRunner.And("A user with groups is defined as:", ((string)(null)), table6, "And ");
 #line hidden
 #line 36
- testRunner.When("I register the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I register the user with given group", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 37
  testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -318,14 +318,14 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table7.AddRow(new string[] {
-                            "gholi"});
+                            "jUser"});
 #line 41
  testRunner.Given("A user is registered as:", ((string)(null)), table7, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table8.AddRow(new string[] {
-                            "gp1"});
+                            "jGroup"});
 #line 44
  testRunner.And("A Group is registered as:", ((string)(null)), table8, "And ");
 #line hidden
@@ -373,14 +373,14 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table9.AddRow(new string[] {
-                            "gholi"});
+                            "LUser"});
 #line 52
  testRunner.Given("A user is registered as:", ((string)(null)), table9, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table10.AddRow(new string[] {
-                            "gp1"});
+                            "LGroup"});
 #line 55
  testRunner.And("A Group is registered as:", ((string)(null)), table10, "And ");
 #line hidden

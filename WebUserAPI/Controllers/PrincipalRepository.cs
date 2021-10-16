@@ -50,6 +50,11 @@ namespace WebUserAPI.Controllers
             return null;
         }
 
+        public List<Group> getGroupsOf(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Save() { }
 
         public void Update(Principal entity)

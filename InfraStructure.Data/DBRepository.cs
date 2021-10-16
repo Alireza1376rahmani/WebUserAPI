@@ -34,15 +34,26 @@ namespace InfraStructure.Data
 
         public TSubEntity GetById<TSubEntity>(Guid id) where TSubEntity : Principal
         {
-            return ctx.Users.FirstOrDefault(p => p.Id == id) as TSubEntity;
+            return ctx.Principals.FirstOrDefault(p => p.Id == id) as TSubEntity;
         }
 
         public TSubEntity GetByIdNoTrack<TSubEntity>(Guid id) where TSubEntity : Principal
         {
-            return ctx.Users.AsNoTracking().FirstOrDefault(p => p.Id == id) as TSubEntity;
+            return ctx.Principals.AsNoTracking().FirstOrDefault(p => p.Id == id) as TSubEntity;
         }
 
-        public void Save()
+        public List<Group> getGroupsOf(Guid id)
+        {
+            var ids = ctx.Memberships.Where(m => m.PrincipalId == id).Select(m => m.GroupId);
+            List<Group> groups= new List<Group>();
+            foreach(Guid theId in ids)
+            {
+                groups.Add(GetById<Group>(theId));
+            }
+            return groups;
+        }
+
+            public void Save()
         {
             ctx.SaveChanges();
         }
