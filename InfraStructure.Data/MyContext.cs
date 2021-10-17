@@ -20,6 +20,7 @@ namespace InfraStructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Principal>()
+                .Ignore(x => x.Groups)
                 .HasDiscriminator<string>("principal_type")
                 .HasValue<User>("user")
                 .HasValue<Group>("group");
@@ -28,7 +29,8 @@ namespace InfraStructure.Data
 
             modelBuilder.Entity<Membership>()
                 .HasOne<Principal>(m => m.Principal)
-                .WithMany();
+                .WithMany("memberships")
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Membership>()
                 .HasOne<Group>(m => m.Group)

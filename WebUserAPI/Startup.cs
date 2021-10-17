@@ -14,6 +14,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUserAPI.Controllers;
+using WebUserAPI.Model;
+using WebUserAPI.Services;
+
 
 namespace WebUserAPI
 {
@@ -29,7 +32,7 @@ namespace WebUserAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IRepository<Principal>, PrincipalRepository>();
+            services.AddSingleton<IRepository<Domain.Principal>, PrincipalRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
             services.AddScoped<IWeatherService, WeatherService>();
             services.AddDbContext<MyContext>();

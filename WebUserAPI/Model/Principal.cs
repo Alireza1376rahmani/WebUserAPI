@@ -1,46 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using Domain;
-using System;
 
 namespace WebUserAPI.Model
 {
-    public enum PrincipalPatchType
+    public  class Principal
     {
-        JoinToGroup,LeaveGroup
-    }
-
-    public class CreatePrincipalCommand
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-    }
-    public class UpdatePrincipalCommand
-    {
+        public string Type  { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
-    }
-    public class ReadPrincipalCommand
-    {
-        public Guid Id { get; set; }
-    }
-    public class DeletePrincipalCommand
-    {
-        public Guid Id { get; set; }
-    }
-    public class PrincipalJoinsToGroupCommand
-    {
-        public Guid PrincipalId { get; set; }
-        public Guid GroupId { get; set; }
-    }
-    public class PrincipalLeavesGroupCommand : PrincipalJoinsToGroupCommand { }
-    public class CreatePrincipalWithGroupsCommand : CreatePrincipalCommand
-    {
-        public List<Guid> groups { get; set; }
-    }
-    public class PatchCommand
-    {
-        public PrincipalPatchType Type { get; set; }
-        public List<Guid> Groups { get; set; }
+        public List<Principal> Groups { get; set; }
     }
 }
-

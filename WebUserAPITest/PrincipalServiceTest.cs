@@ -2,8 +2,6 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using WebUserAPI.Controllers;
-using WebUserAPI.Model;
 using Xunit;
 
 namespace WebUserAPITest
@@ -11,7 +9,7 @@ namespace WebUserAPITest
     public class PrincipalServiceTest
     {
         protected Mock<IRepository<Principal>> mockRepo;
-        protected PrincipalService sut;
+        protected WebUserAPI.Services.PrincipalService sut;
 
         protected const string SOME_NAME = "some valid name";
         protected const string SOME_GUID = "5b2bf1b5-5edc-4ba5-92c1-330c126bebb7";
@@ -26,7 +24,7 @@ namespace WebUserAPITest
             mockRepo.Setup(x => x.Save());
             mockRepo.Setup(x => x.GetById<Principal>(It.IsAny<Guid>())).Returns<Guid>(id => new Group(id, SOME_NAME));
 
-            sut = new PrincipalService(mockRepo.Object);
+            sut = new WebUserAPI.Services.PrincipalService(mockRepo.Object);
         }
 
         [Fact]
@@ -34,7 +32,7 @@ namespace WebUserAPITest
         {
             #region Arrange
             var anotherName = "some another valid name";
-            var command = new UpdatePrincipalCommand
+            var command = new WebUserAPI.Model.PatchPrincipalCommand
             {
                 Name = anotherName,
                 Id = Guid.Parse(SOME_GUID)
@@ -71,7 +69,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            Assert.IsType<List<Principal>>(act);
+            Assert.IsType<List<WebUserAPI.Model.Principal>>(act);
             mockRepo.Verify(x => x.GetAll());
             mockRepo.VerifyNoOtherCalls();
             #endregion
@@ -81,7 +79,7 @@ namespace WebUserAPITest
         public void GetPrincipalById_ShouldReturnCorrectUser_WithExistingId()
         {
             #region Arrange
-            var command = new ReadPrincipalCommand
+            var command = new WebUserAPI.Model.ReadPrincipalCommand
             {
                 Id = Guid.Parse(SOME_GUID)
             };
@@ -101,7 +99,7 @@ namespace WebUserAPITest
         public void DeletePrincipal_MustDeleteGivenUserFromResource_ByCallingDeleteFromRepository()
         {
             #region Arrange
-            var command = new DeletePrincipalCommand
+            var command = new WebUserAPI.Model.DeletePrincipalCommand
             {
                 Id = Guid.Parse(SOME_GUID)
             };
@@ -123,9 +121,9 @@ namespace WebUserAPITest
         {
             #region Arrange
             Guid givenGroupId = Guid.NewGuid();
-            var command = new PrincipalJoinsToGroupCommand
+            var command = new WebUserAPI.Model.PatchPrincipalCommand
             {
-                PrincipalId = Guid.Parse(SOME_GUID),
+                MemberId = Guid.Parse(SOME_GUID),
                 GroupId = givenGroupId
             };
             mockRepo.Setup(x => x.Update(It.IsAny<Principal>()));
@@ -147,9 +145,9 @@ namespace WebUserAPITest
         {
             #region Arrange
             var givenGroupId = Guid.NewGuid();
-            var command = new PrincipalLeavesGroupCommand
+            var command = new WebUserAPI.Model.PatchPrincipalCommand
             {
-                PrincipalId = Guid.Parse(SOME_GUID),
+                MemberId = Guid.Parse(SOME_GUID),
                 GroupId = givenGroupId
             };
             #endregion

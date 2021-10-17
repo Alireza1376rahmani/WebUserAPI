@@ -11,6 +11,6 @@ namespace Domain
         {
             Guard.Ensures(() => name.Length > 2, nameof(name));
         }
-        public User(Guid id, string name, List<Group> groups) : base(id, name, groups) { }
+       //    public User(Guid id, string name, List<Group> groups) : base(id, name, groups) { }
     }
 }

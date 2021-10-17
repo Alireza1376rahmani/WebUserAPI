@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using WebUserAPI;
-using WebUserAPI.Model;
 using Moq;
 using WebUserAPI.Controllers;
 using Domain;
@@ -40,7 +39,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            Assert.Contains(sut.Groups, group => group == someGroup);
+            Assert.Contains(sut.Groups, group => group.Id.Equals(someGroup.Id));
             #endregion
         }
 

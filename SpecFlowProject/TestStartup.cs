@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebUserAPI.Controllers;
+using WebUserAPI.Model;
+using WebUserAPI.Services;
 
 namespace SpecFlowProject
 {
@@ -25,7 +27,7 @@ namespace SpecFlowProject
         {
             services.AddDbContext<MyContext>();
             var assembly = typeof(PrincipalController).Assembly;
-            services.AddSingleton<IRepository<Principal>, DBRepository>();
+            services.AddSingleton<IRepository<Domain.Principal>, DBRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
             services.AddControllers()
                 .AddApplicationPart(assembly);

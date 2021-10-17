@@ -1,5 +1,4 @@
-﻿using Domain;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +19,6 @@ namespace SpecFlowProject.Steps
     public class PrincipalManagementStepDefinition : IClassFixture<CustomWebApplicationFactory<TestStartup>>
     {
         private CreatePrincipalCommand command;
-        Group theGroup;
-        private CreatePrincipalWithGroupsCommand byGroupCommand;
         private WebApplicationFactory<TestStartup> _factory;
         private List<Guid> _identifiers;
         private Principal principal = null;
@@ -68,8 +65,13 @@ namespace SpecFlowProject.Steps
         [When(@"I get the user by Id")]
         public async Task WhenIGetTheUserByIdAsync()
         {
-            var getRelativeUri = new Uri($"Principal/{{{_identifiers[0]}}}", UriKind.Relative);
-            try { principal = await _client.GetFromJsonAsync<User>(getRelativeUri); } catch { principal = null; }
+            var getRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
+            try
+            {
+                principal = await _client.GetFromJsonAsync<Principal>(getRelativeUri);
+            }
+            catch
+            { principal = null; }
         }
 
         [Then(@"I will find the user")]
@@ -91,7 +93,7 @@ namespace SpecFlowProject.Steps
         public async Task WhenIUpdateThePrincipalTo(Table table)
         {
             command = table.CreateInstance<CreatePrincipalCommand>();
-            UpdatePrincipalCommand uCommand = table.CreateInstance<UpdatePrincipalCommand>();
+            PatchPrincipalCommand uCommand = table.CreateInstance<PatchPrincipalCommand>();
             uCommand.Id = _identifiers[0];
 
             var putRelativeUri = new Uri("principal", UriKind.Relative);
@@ -131,7 +133,6 @@ namespace SpecFlowProject.Steps
         {
             GivenAPrincipalIsDefinedAs(table, "group");
             await WhenIRegisterThePrincipalAsync();
-            theGroup = new Group(_identifiers[0], command.Name);
         }
 
         [When(@"I join the user to the group")]
@@ -154,8 +155,8 @@ namespace SpecFlowProject.Steps
         public void ThenIWillFindTheUserWithTheGroup()
         {
             Assert.NotNull(principal);
-            Assert.Equal(_identifiers[0], principal.Id);
-            Assert.NotNull(principal.Groups.Find(g => g.Id.Equals(_identifiers[1])));
+            Assert.Equal(_identifiers[1], principal.Id);
+            Assert.NotNull(principal.Groups.Find(g => g.Id.Equals(_identifiers[0])));
         }
 
         [Given(@"the user is in group")]
@@ -167,8 +168,8 @@ namespace SpecFlowProject.Steps
         [When(@"I leave the user from group")]
         public async Task WhenILeaveTheUserFromGroup()
         {
-            var userId = _identifiers[0];
-            var groupId = _identifiers[1];
+            var userId = _identifiers[1];
+            var groupId = _identifiers[0];
             var lCommand = new PrincipalLeavesGroupCommand
             {
                 GroupId = groupId,
@@ -188,25 +189,23 @@ namespace SpecFlowProject.Steps
             Assert.Null(principal.Groups.Find(g => g.Id == _identifiers[1]));
         }
 
-        [Given(@"A user with groups is defined as:")]
-        public void GivenAUserWithGroupsIsDefinedAs(Table table)
-        {
-            byGroupCommand = table.CreateInstance<CreatePrincipalWithGroupsCommand>();
-            byGroupCommand.groups.Clear();
-            byGroupCommand.groups.Add(theGroup);
-            byGroupCommand.Type = "group";
-        }
-
         [Then(@"I will find the user with his groups")]
         public void ThenIWillFindTheUserWithHisGroups()
         {
         }
 
-        [When(@"I register the user with given group")]
-        public async Task WhenIRegisterTheUserWithGivenGroup()
+        [When(@"I register the user with registered group as default")]
+        public async Task WhenIRegisterTheUserWithRegisteredGroupAsDefault()
         {
-            var postRelativeUri = new Uri("principal/groups", UriKind.Relative);
-            Response = await _client.PostAsJsonAsync(postRelativeUri, byGroupCommand).ConfigureAwait(false);
+            var postRelativeUri = new Uri("principal", UriKind.Relative);
+            CreatePrincipalCommand theCommand = new CreatePrincipalCommand
+            {
+                Name = command.Name,
+                Type = "user",
+                Groups = _identifiers
+            };
+
+            Response = await _client.PostAsJsonAsync(postRelativeUri, theCommand).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
             _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
         }

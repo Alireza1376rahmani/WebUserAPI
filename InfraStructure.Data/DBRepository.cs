@@ -34,7 +34,8 @@ namespace InfraStructure.Data
 
         public TSubEntity GetById<TSubEntity>(Guid id) where TSubEntity : Principal
         {
-            return ctx.Principals.FirstOrDefault(p => p.Id == id) as TSubEntity;
+            var res = ctx.Principals.Include("memberships").FirstOrDefault(p => p.Id == id) as TSubEntity;
+            return res;
         }
 
         public TSubEntity GetByIdNoTrack<TSubEntity>(Guid id) where TSubEntity : Principal

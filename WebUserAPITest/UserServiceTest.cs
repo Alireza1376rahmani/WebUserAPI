@@ -7,7 +7,6 @@ using Xunit;
 using WebUserAPI;
 using WebUserAPI.Controllers;
 using Moq;
-using WebUserAPI.Model;
 using Domain;
 
 namespace WebUserAPITest
@@ -19,7 +18,7 @@ namespace WebUserAPITest
         public void CreatePrincipal_MustCreateAProperUser_WhenGivenCommandTypeIsUser()
         {
             #region Arrange
-            var command = new CreatePrincipalCommand
+            var command = new WebUserAPI.Model.CreatePrincipalCommand
             {
                 Name = SOME_NAME,
                 Type = USER_TYPE

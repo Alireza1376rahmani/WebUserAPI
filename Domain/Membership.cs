@@ -10,10 +10,10 @@ namespace Domain
     {
         public Membership() { }
 
-        public Membership(Guid principal, Guid group)
+        public Membership(Principal principal, Group group)
         {
-            PrincipalId = principal;
-            GroupId = group;
+            Principal= principal;
+            Group= group;
         }
 
         public Guid GroupId { get; set; }

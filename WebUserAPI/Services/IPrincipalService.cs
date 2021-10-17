@@ -1,9 +1,8 @@
-﻿using Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using WebUserAPI.Model;
 
-namespace WebUserAPI.Controllers
+namespace WebUserAPI.Services
 {
     public interface IPrincipalService
     {
@@ -11,11 +10,9 @@ namespace WebUserAPI.Controllers
         void DeletePrincipal(DeletePrincipalCommand command);
         List<Principal> GetAllPrincipals();
         Principal GetPrincipalById(ReadPrincipalCommand command);
-        void PrincipalJoinsToGroup(PrincipalJoinsToGroupCommand command);
-        void PrincipalLeavesGroup(PrincipalLeavesGroupCommand command);
-        void UpdatePrincipal(UpdatePrincipalCommand command);
-        List<Group> getAllGroups(Guid id);
-        Guid CreatePrincipalWithGroups(CreatePrincipalWithGroupsCommand command);
+        void PrincipalJoinsToGroup(PatchPrincipalCommand command);
+        void PrincipalLeavesGroup(PatchPrincipalCommand command);
+        void UpdatePrincipal(PatchPrincipalCommand command);
         void UpdatePrincipal(PatchCommand command);
     }
 }

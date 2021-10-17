@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebUserAPI.Model;
-
-
+using WebUserAPI.Services;
 
 namespace WebUserAPI.Controllers
 {
@@ -25,6 +24,7 @@ namespace WebUserAPI.Controllers
             this.principalService = principalService;
         }
 
+        #region GET
         [HttpGet]
         public IActionResult Get()
         {
@@ -34,7 +34,7 @@ namespace WebUserAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(Principal))]
+        [Produces(typeof(WebUserAPI.Model.Principal))]
         public IActionResult Get(Guid id)
         {
             var command = new ReadPrincipalCommand { Id = id };
@@ -42,6 +42,7 @@ namespace WebUserAPI.Controllers
             if (principal == null) return NotFound();
             return Ok(principal);
         }
+        #endregion
 
         [HttpPost]
         public IActionResult Create([FromBody] CreatePrincipalCommand command)
@@ -50,15 +51,8 @@ namespace WebUserAPI.Controllers
             return Ok(guid);
         }
 
-        [HttpPatch("{id}")]
-        public IActionResult Patch(Guid id,[FromBody] PatchCommand command)
-        {
-            principalService.UpdatePrincipal(command);
-        }
-
-
         [HttpPut]
-        public IActionResult Update([FromBody] UpdatePrincipalCommand command)
+        public IActionResult Update([FromBody] PatchPrincipalCommand command)
         {
             principalService.UpdatePrincipal(command);
             return Ok(command.Id);
@@ -70,21 +64,6 @@ namespace WebUserAPI.Controllers
             var command = new DeletePrincipalCommand { Id = id };
             principalService.DeletePrincipal(command);
             return Ok();
-        }
-
-        [HttpGet("groups/{id}")]
-        [Produces(typeof(Principal))]
-        public IActionResult GetAll(Guid id)
-        {
-            var groups = principalService.getAllGroups(id);
-            return Ok(groups);
-        }
-
-        [HttpPost("groups")]
-        public IActionResult CreateWithGroups([FromBody] CreatePrincipalWithGroupsCommand command)
-        {
-            var guid = principalService.CreatePrincipalWithGroups(command);
-            return Ok(guid);
         }
 
     }

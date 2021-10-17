@@ -59,11 +59,6 @@ namespace InfraStructure.Data.Migrations
                 {
                     b.HasBaseType("Domain.Principal");
 
-                    b.Property<Guid?>("PrincipalId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("PrincipalId");
-
                     b.HasDiscriminator().HasValue("group");
                 });
 
@@ -83,9 +78,9 @@ namespace InfraStructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Principal", "Principal")
-                        .WithMany()
+                        .WithMany("memberships")
                         .HasForeignKey("PrincipalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Group");
@@ -93,16 +88,9 @@ namespace InfraStructure.Data.Migrations
                     b.Navigation("Principal");
                 });
 
-            modelBuilder.Entity("Domain.Group", b =>
-                {
-                    b.HasOne("Domain.Principal", null)
-                        .WithMany("Groups")
-                        .HasForeignKey("PrincipalId");
-                });
-
             modelBuilder.Entity("Domain.Principal", b =>
                 {
-                    b.Navigation("Groups");
+                    b.Navigation("memberships");
                 });
 #pragma warning restore 612, 618
         }

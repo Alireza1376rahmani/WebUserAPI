@@ -13,26 +13,19 @@ namespace InfraStructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    principal_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PrincipalId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    principal_type = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Principals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Principals_Principals_PrincipalId",
-                        column: x => x.PrincipalId,
-                        principalTable: "Principals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Memberships",
                 columns: table => new
                 {
-                    PrincipalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PrincipalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,19 +40,13 @@ namespace InfraStructure.Data.Migrations
                         name: "FK_Memberships_Principals_PrincipalId",
                         column: x => x.PrincipalId,
                         principalTable: "Principals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Memberships_GroupId",
                 table: "Memberships",
                 column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Principals_PrincipalId",
-                table: "Principals",
-                column: "PrincipalId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -7,7 +7,6 @@ using Xunit;
 using WebUserAPI;
 using Moq;
 using WebUserAPI.Controllers;
-using WebUserAPI.Model;
 using Domain;
 
 namespace WebUserAPITest
@@ -18,7 +17,7 @@ namespace WebUserAPITest
         public void CreatePrincipal_MustWorkWithProperCommand_WhenGivenCommandTypeIsGroup()
         {
             #region Arrange
-            var command = new CreatePrincipalCommand
+            var command = new WebUserAPI.Model.CreatePrincipalCommand
             {
                 Name = SOME_NAME,
                 Type = GROUP_TYPE

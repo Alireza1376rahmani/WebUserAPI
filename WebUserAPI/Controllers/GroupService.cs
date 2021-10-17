@@ -20,7 +20,7 @@ namespace WebUserAPI
             repo.Save();
         }
 
-        public void UpdateGroup(UpdatePrincipalCommand command)
+        public void UpdateGroup(PatchPrincipalCommand command)
         {
             var group = repo.GetById<Group>(command.Id);
             group.UpdateName(command.Name);
