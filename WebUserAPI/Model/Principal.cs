@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using Domain;
+
 
 namespace WebUserAPI.Model
 {
@@ -13,6 +13,12 @@ namespace WebUserAPI.Model
         public string Type  { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<Principal> Groups { get; set; }
+        public List<Membership> Groups { get; set; }
+    }
+
+    public class Membership
+    {
+        public Guid GroupId { get; set; }
+        public DateTime JoinDate { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -51,11 +52,23 @@ namespace WebUserAPI.Controllers
             return Ok(guid);
         }
 
-        [HttpPut]
-        public IActionResult Update([FromBody] PatchPrincipalCommand command)
+        [HttpPut("{id}")]
+        public IActionResult JoinToGroup(Guid id, [FromBody] PatchPrincipalCommand command)
         {
-            principalService.UpdatePrincipal(command);
-            return Ok(command.Id);
+            command.Id = id;
+            switch (command.Order)
+            {
+                case PrincipalPatchType.ChangeName:
+                    principalService.UpdatePrincipal(command);
+                    return Ok(id);
+                case PrincipalPatchType.JoinToGroup:
+                    principalService.PrincipalJoinsToGroup(command);
+                    return Ok();
+                case PrincipalPatchType.LeaveGroup:
+                    principalService.PrincipalLeavesGroup(command);
+                    return Ok();
+            }
+            return NotFound("set the order in your command");
         }
 
         [HttpDelete("{id}")]
@@ -65,6 +78,8 @@ namespace WebUserAPI.Controllers
             principalService.DeletePrincipal(command);
             return Ok();
         }
+
+        
 
     }
 }

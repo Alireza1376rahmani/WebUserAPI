@@ -58,8 +58,13 @@ namespace WebUserAPI.Services
                 Type = getPrincipalType(principal),
                 Id = principal.Id,
                 Name = principal.Name,
-                Groups = needMapGroups? principal.Groups.Select(g => mapPrincipal(g,false)).ToList() : new List<Model.Principal>()
+                Groups = needMapGroups? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>()
             };
+        }
+
+        private Model.Membership mapMembership(Membership g)
+        {
+            return new Model.Membership { GroupId = g.GroupId, JoinDate = g.JoinDate };
         }
 
         private string getPrincipalType(Principal principal)
@@ -76,7 +81,7 @@ namespace WebUserAPI.Services
         }
         public void PrincipalJoinsToGroup(Model.PatchPrincipalCommand command)
         {
-            var thePrincipal = repository.GetById<User>(command.MemberId);
+            var thePrincipal = repository.GetById<User>(command.Id);
             var theGroup = repository.GetById<Group>(command.GroupId);
 
             thePrincipal.AddGroup(theGroup);
@@ -86,17 +91,13 @@ namespace WebUserAPI.Services
         }
         public void PrincipalLeavesGroup(Model.PatchPrincipalCommand command)
         {
-            var thePrincipal = repository.GetById<Principal>(command.MemberId);
+            var thePrincipal = repository.GetById<Principal>(command.Id);
             var theGroup = repository.GetById<Group>(command.GroupId);
 
             thePrincipal.RemoveGroup(theGroup);
 
             repository.Update(thePrincipal);
             repository.Save();
-        }
-        public void UpdatePrincipal(Model.PatchCommand command)
-        {
-
         }
     }
 }

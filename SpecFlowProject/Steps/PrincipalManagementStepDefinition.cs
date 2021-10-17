@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,10 +95,14 @@ namespace SpecFlowProject.Steps
         public async Task WhenIUpdateThePrincipalTo(Table table)
         {
             command = table.CreateInstance<CreatePrincipalCommand>();
-            PatchPrincipalCommand uCommand = table.CreateInstance<PatchPrincipalCommand>();
+            PatchPrincipalCommand uCommand = new PatchPrincipalCommand
+            {
+                Name = command.Name,
+                Order = PrincipalPatchType.ChangeName,
+            };
             uCommand.Id = _identifiers[0];
 
-            var putRelativeUri = new Uri("principal", UriKind.Relative);
+            var putRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
             Response = await _client.PutAsJsonAsync(putRelativeUri, uCommand).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
             _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
@@ -138,16 +144,14 @@ namespace SpecFlowProject.Steps
         [When(@"I join the user to the group")]
         public async Task WhenIJoinTheUserToTheGroup()
         {
-            var userId = _identifiers[0];
-            var groupId = _identifiers[1];
-            var jCommand = new PrincipalJoinsToGroupCommand
+            var jCommand = new PatchPrincipalCommand
             {
-                GroupId = groupId,
-                PrincipalId = userId
+                Order = PrincipalPatchType.JoinToGroup,
+                GroupId = _identifiers[0],
             };
+            var patchRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
+            Response = await _client.PutAsJsonAsync(patchRelativeUri, jCommand).ConfigureAwait(false);
 
-            var putRelativeUri = new Uri("principal/join", UriKind.Relative);
-            Response = await _client.PutAsJsonAsync(putRelativeUri, jCommand).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
         }
 
@@ -156,7 +160,7 @@ namespace SpecFlowProject.Steps
         {
             Assert.NotNull(principal);
             Assert.Equal(_identifiers[1], principal.Id);
-            Assert.NotNull(principal.Groups.Find(g => g.Id.Equals(_identifiers[0])));
+            Assert.NotNull(principal.Groups.Find(g => g.GroupId.Equals(_identifiers[0])));
         }
 
         [Given(@"the user is in group")]
@@ -168,15 +172,13 @@ namespace SpecFlowProject.Steps
         [When(@"I leave the user from group")]
         public async Task WhenILeaveTheUserFromGroup()
         {
-            var userId = _identifiers[1];
-            var groupId = _identifiers[0];
-            var lCommand = new PrincipalLeavesGroupCommand
+            var lCommand = new PatchPrincipalCommand
             {
-                GroupId = groupId,
-                PrincipalId = userId
+                Order = PrincipalPatchType.LeaveGroup,
+                GroupId = _identifiers[0],
             };
 
-            var putRelativeUri = new Uri("principal/leave", UriKind.Relative);
+            var putRelativeUri = new Uri($"Principal/{{{ _identifiers.Last() }}}", UriKind.Relative);
             Response = await _client.PutAsJsonAsync(putRelativeUri, lCommand).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
         }
@@ -185,8 +187,8 @@ namespace SpecFlowProject.Steps
         public void ThenIWillNotFindTheGroupInGroupsOfUser()
         {
             Assert.NotNull(principal);
-            Assert.Equal(_identifiers[0], principal.Id);
-            Assert.Null(principal.Groups.Find(g => g.Id == _identifiers[1]));
+            Assert.Equal(_identifiers[1], principal.Id);
+            Assert.Null(principal.Groups.Find(g => g.GroupId == _identifiers[1]));
         }
 
         [Then(@"I will find the user with his groups")]

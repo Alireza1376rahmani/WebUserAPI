@@ -13,6 +13,5 @@ namespace WebUserAPI.Services
         void PrincipalJoinsToGroup(PatchPrincipalCommand command);
         void PrincipalLeavesGroup(PatchPrincipalCommand command);
         void UpdatePrincipal(PatchPrincipalCommand command);
-        void UpdatePrincipal(PatchCommand command);
     }
 }

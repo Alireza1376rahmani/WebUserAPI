@@ -8,17 +8,12 @@ namespace Domain
 {
     public class Membership
     {
-        public Membership() { }
-
-        public Membership(Principal principal, Group group)
+        public Guid GroupId { get; private set; }
+        public DateTime JoinDate { get; private set; }
+        public Membership(Guid GroupId, DateTime JoinDate)
         {
-            Principal= principal;
-            Group= group;
+            this.GroupId = GroupId;
+            this.JoinDate = JoinDate;
         }
-
-        public Guid GroupId { get; set; }
-        public Guid PrincipalId { get; set; }
-        public Principal Principal { get; set; }
-        public Group Group { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace WebUserAPITest
             mockRepo = new Mock<IRepository<Principal>>();
             mockRepo.Setup(x => x.Save());
             mockRepo.Setup(x => x.GetById<Principal>(It.IsAny<Guid>())).Returns<Guid>(id => new Group(id, SOME_NAME));
-
+            mockRepo.Setup(x => x.GetById<User>(It.IsAny<Guid>())).Returns<Guid>(id => new User(id, SOME_NAME));
             sut = new WebUserAPI.Services.PrincipalService(mockRepo.Object);
         }
 
@@ -123,7 +123,7 @@ namespace WebUserAPITest
             Guid givenGroupId = Guid.NewGuid();
             var command = new WebUserAPI.Model.PatchPrincipalCommand
             {
-                MemberId = Guid.Parse(SOME_GUID),
+                Id = Guid.Parse(SOME_GUID),
                 GroupId = givenGroupId
             };
             mockRepo.Setup(x => x.Update(It.IsAny<Principal>()));
@@ -135,7 +135,7 @@ namespace WebUserAPITest
 
             #region Assert
             mockRepo.Verify(x => x.Update(It.Is<Principal>(principal =>
-            (principal.Groups.Find(e => e.Id == givenGroupId) != null) && (principal.Id == Guid.Parse(SOME_GUID))
+            (principal.Memberships.Find(e => e.GroupId == givenGroupId) != null) && (principal.Id == Guid.Parse(SOME_GUID))
             )));
             #endregion
         }
@@ -147,7 +147,7 @@ namespace WebUserAPITest
             var givenGroupId = Guid.NewGuid();
             var command = new WebUserAPI.Model.PatchPrincipalCommand
             {
-                MemberId = Guid.Parse(SOME_GUID),
+                Id = Guid.Parse(SOME_GUID),
                 GroupId = givenGroupId
             };
             #endregion
@@ -157,7 +157,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Update(It.Is<Principal>(x => (x.Id == Guid.Parse(SOME_GUID)) && (x.Groups.Find(x => x.Id == givenGroupId) == null))));
+            mockRepo.Verify(x => x.Update(It.Is<Principal>(x => (x.Id == Guid.Parse(SOME_GUID)) && (x.Memberships.Find(x => x.GroupId == givenGroupId) == null))));
             #endregion
         }
 

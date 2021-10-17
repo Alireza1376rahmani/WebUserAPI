@@ -39,7 +39,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            Assert.Contains(sut.Groups, group => group.Id.Equals(someGroup.Id));
+            Assert.Contains(sut.Memberships, group => group.GroupId.Equals(someGroup.Id));
             #endregion
         }
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfraStructure.Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211017071740_init")]
+    [Migration("20211017134535_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,32 +21,17 @@ namespace InfraStructure.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Membership", b =>
-                {
-                    b.Property<Guid>("PrincipalId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PrincipalId", "GroupId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("Memberships");
-                });
-
             modelBuilder.Entity("Domain.Principal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("principal_type")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -54,45 +39,58 @@ namespace InfraStructure.Data.Migrations
 
                     b.ToTable("Principals");
 
-                    b.HasDiscriminator<string>("principal_type").HasValue("Principal");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Principal");
                 });
 
             modelBuilder.Entity("Domain.Group", b =>
                 {
                     b.HasBaseType("Domain.Principal");
 
-                    b.HasDiscriminator().HasValue("group");
+                    b.HasDiscriminator().HasValue("Group");
                 });
 
             modelBuilder.Entity("Domain.User", b =>
                 {
                     b.HasBaseType("Domain.Principal");
 
-                    b.HasDiscriminator().HasValue("user");
-                });
-
-            modelBuilder.Entity("Domain.Membership", b =>
-                {
-                    b.HasOne("Domain.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Principal", "Principal")
-                        .WithMany("memberships")
-                        .HasForeignKey("PrincipalId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Principal");
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Domain.Principal", b =>
                 {
-                    b.Navigation("memberships");
+                    b.OwnsMany("Domain.Membership", "Memberships", b1 =>
+                        {
+                            b1.Property<Guid>("PrincipalId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<Guid>("GroupId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("JoinDate")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("PrincipalId", "Id");
+
+                            b1.HasIndex("GroupId");
+
+                            b1.ToTable("Membership");
+
+                            b1.HasOne("Domain.Group", null)
+                                .WithMany()
+                                .HasForeignKey("GroupId")
+                                .OnDelete(DeleteBehavior.NoAction)
+                                .IsRequired();
+
+                            b1.WithOwner()
+                                .HasForeignKey("PrincipalId");
+                        });
+
+                    b.Navigation("Memberships");
                 });
 #pragma warning restore 612, 618
         }
