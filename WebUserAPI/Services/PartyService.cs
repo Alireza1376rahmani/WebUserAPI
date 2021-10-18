@@ -18,27 +18,46 @@ namespace WebUserAPI.Services
 
         public Guid CreateParty(CreatePartyCommand command)
         {
-            throw new NotImplementedException();
+            Party party;
+            Guid guid = Guid.NewGuid();
+
+            if (command.Type == "business")
+                party = new BusinessParty(guid, command.Name, command.NationalNumber);
+            else
+                party = new IndividualParty(guid, command.Name, command.LastName, command.NationalNumber);
+
+            repository.Create(party);
+            repository.Save();
+
+            return guid;
         }
 
         public void DeleteParty(DeletePartyCommand command)
         {
-            throw new NotImplementedException();
+            Party party = repository.GetById<Party>(command.Id);
+
+            repository.Delete(party);
+            repository.Save();
         }
 
         public List<Party> GetAllPrincipals()
         {
-            throw new NotImplementedException();
+            return repository.GetAll();
         }
 
         public Party GetPartyById(ReadPartyCommand command)
         {
-            throw new NotImplementedException();
+            if(command.Type == "business")
+                return repository.GetById<BusinessParty>(command.Id);
+            return repository.GetById<IndividualParty>(command.Id)
         }
 
-        public void UpdateParty(PatchPartyCommand command)
+        public void UpdatePartyName(PatchPartyCommand command)
         {
-            throw new NotImplementedException();
+            var party = repository.GetById<Party>(command.Id);
+            party.Name = command.Name;
+            repository.Update(party);
+            repository.Save();
         }
     }
 }

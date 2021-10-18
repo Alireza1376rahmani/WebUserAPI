@@ -2,6 +2,8 @@
 
 namespace WebUserAPI
 {
-    public class DeletePartyCommand : ReadPartyCommand
-    { }
+    public class DeletePartyCommand
+    {
+        public Guid Id { get; set; }
+    }
 }

@@ -25,7 +25,6 @@ namespace WebUserAPI.Controllers
             this.principalService = principalService;
         }
 
-        #region GET
         [HttpGet]
         public IActionResult Get()
         {
@@ -43,7 +42,6 @@ namespace WebUserAPI.Controllers
             if (principal == null) return NotFound();
             return Ok(principal);
         }
-        #endregion
 
         [HttpPost]
         public IActionResult Create([FromBody] CreatePrincipalCommand command)

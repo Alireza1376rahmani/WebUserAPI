@@ -60,14 +60,14 @@ namespace WebUserAPI.Services
                 Groups = needMapGroups? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>()
             };
         }
-        private Model.Membership mapMembership(Membership g)
-        {
-            return new Model.Membership { GroupId = g.GroupId, JoinDate = g.JoinDate };
-        }
         private string getPrincipalType(Principal principal)
         {
             if (principal is User) return "user";
             return "group";
+        }
+        private Model.Membership mapMembership(Membership g)
+        {
+            return new Model.Membership { GroupId = g.GroupId, JoinDate = g.JoinDate };
         }
         public void DeletePrincipal(Model.DeletePrincipalCommand command)
         {
