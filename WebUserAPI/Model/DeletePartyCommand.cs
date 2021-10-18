@@ -1,6 +1,7 @@
-﻿namespace WebUserAPI
+﻿using System;
+
+namespace WebUserAPI
 {
-    public class DeletePartyCommand
-    {
-    }
+    public class DeletePartyCommand : ReadPartyCommand
+    { }
 }
