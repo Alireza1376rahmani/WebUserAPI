@@ -7,7 +7,7 @@ using WebUserAPI.Model;
 
 namespace WebUserAPI.Services
 {
-    public class PartyService
+    public class PartyService : IPartyService
     {
         private readonly IRepository<Party> repository;
 
@@ -40,16 +40,16 @@ namespace WebUserAPI.Services
             repository.Save();
         }
 
-        public List<Party> GetAllPrincipals()
+        public List<Party> GetAllParties()
         {
             return repository.GetAll();
         }
 
         public Party GetPartyById(ReadPartyCommand command)
         {
-            if(command.Type == "business")
+            if (command.Type == "business")
                 return repository.GetById<BusinessParty>(command.Id);
-            return repository.GetById<IndividualParty>(command.Id)
+            return repository.GetById<IndividualParty>(command.Id);
         }
 
         public void UpdatePartyName(PatchPartyCommand command)
@@ -58,6 +58,28 @@ namespace WebUserAPI.Services
             party.Name = command.Name;
             repository.Update(party);
             repository.Save();
+        }
+
+        public void Update(PutPartyCommand command)
+        {
+            Party party = repository.GetById<Party>(command.Id);
+
+            repository.Delete(party); 
+            repository.Save();
+
+            if (getpartyType(party) == "business")
+                party = new BusinessParty(command.Id, command.Name, command.NationalNumber);
+            else
+                party = new IndividualParty(command.Id,command.Name, command.LastName, command.NationalNumber);
+
+            repository.Create(party);
+            repository.Save();
+        }
+
+        private string getpartyType(Party party)
+        {
+            if (party is BusinessParty) return "business";
+            return "individual";
         }
     }
 }
