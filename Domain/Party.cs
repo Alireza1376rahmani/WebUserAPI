@@ -6,6 +6,7 @@ namespace Domain
     {
         public string Name { get; set; }
 
+        protected Party() { }
         protected Party(Guid id, string name) : base(id)
         {
             Name = name;

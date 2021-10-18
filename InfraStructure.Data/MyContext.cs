@@ -11,7 +11,7 @@ namespace InfraStructure.Data
     public class MyContext : DbContext
     {
         public DbSet<Principal> Principals { get; set; }
-     
+        public DbSet<Party> Parties { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=FirstTest;Integrated Security=True;MultipleActiveResultSets=True;Application Name=TrainingApp");
@@ -30,9 +30,18 @@ namespace InfraStructure.Data
             });
 
             modelBuilder.Entity<Principal>()
+                .HasOne<Party>(p => p.Party)
+                .WithOne();
+
+            modelBuilder.Entity<Principal>()
                 .HasDiscriminator()
                 .HasValue<User>("User")
                 .HasValue<Group>("Group");
+
+            modelBuilder.Entity<Party>()
+                .HasDiscriminator()
+                .HasValue<IndividualParty>("Individual")
+                .HasValue<BusinessParty>("Business");
         }
     }
 }
