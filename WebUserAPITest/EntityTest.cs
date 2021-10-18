@@ -11,11 +11,9 @@ namespace WebUserAPITest
     public abstract class EntityTest<TEntity> :IDisposable
         where TEntity:Entity
     {
-
         protected TEntity sut;
-
         protected const string SOME_ID = " {BC5ED16F-1A49-4034-AED8-5EC22B0F69D5}";
-
+        protected const string SOME_STRING = "some string";
         public EntityTest()
         {
             sut = GetInstance();

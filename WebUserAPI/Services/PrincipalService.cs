@@ -50,7 +50,6 @@ namespace WebUserAPI.Services
             var principal = repository.GetById<Principal>(command.Id);
             return mapPrincipal(principal, true);;
         }
-
         private Model.Principal mapPrincipal(Principal principal, bool needMapGroups)
         {
             return new Model.Principal
@@ -61,18 +60,15 @@ namespace WebUserAPI.Services
                 Groups = needMapGroups? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>()
             };
         }
-
         private Model.Membership mapMembership(Membership g)
         {
             return new Model.Membership { GroupId = g.GroupId, JoinDate = g.JoinDate };
         }
-
         private string getPrincipalType(Principal principal)
         {
             if (principal is User) return "user";
             return "group";
         }
-
         public void DeletePrincipal(Model.DeletePrincipalCommand command)
         {
             var principal = repository.GetById<Principal>(command.Id);

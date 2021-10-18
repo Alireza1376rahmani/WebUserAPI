@@ -14,12 +14,10 @@ namespace WebUserAPITest
     public abstract class PrincipalTest<TPrincipal> : EntityTest<Principal>
         where TPrincipal : Principal
     {
-
         protected const string SOME_NAME = "some valid name";
-        protected const string SOME_GUID = "3b2bf1b5-5edc-4ba5-92c1-330c126bebb7";
+        protected Group someGroup;
 
         protected abstract override TPrincipal GetInstance();
-
 
         protected override void AssertInvariants()
         {
@@ -27,11 +25,15 @@ namespace WebUserAPITest
             Assert.Equal(SOME_NAME, sut.Name);
         }
 
+        public PrincipalTest()
+        {
+            someGroup = new Group(Guid.Parse(SOME_ID), SOME_NAME);
+        }
+
         [Fact]
         public void AddGroup_MustAddGivenGroupToListOfGroups()
         {
             #region Arrange
-            var someGroup = new Group(Guid.NewGuid(), SOME_NAME);
             #endregion
 
             #region Act
@@ -43,5 +45,55 @@ namespace WebUserAPITest
             #endregion
         }
 
+        [Fact]
+        public void RemoveGroup_MustRemoveGivenGroupFromListOfGroups()
+        {
+            #region Arrange
+            sut.AddGroup(someGroup);
+            #endregion
+
+            #region Act
+            sut.RemoveGroup(someGroup);
+            #endregion
+
+            #region Assert
+            Assert.Null(sut.Memberships.Find(group => group.GroupId.Equals(someGroup.Id)));
+            #endregion
+        }
+
+        [Fact]
+        public void WeShouldCanAssignGivenPartyAsBusinessPartyToPrincipal()
+        {
+            #region Arrange
+            Party party = new BusinessParty(Guid.Parse(SOME_ID),SOME_NAME,SOME_STRING);
+            #endregion
+
+            #region Act
+            sut.Party = party;
+            #endregion
+
+            #region Assert
+            Assert.Equal(party.Id, sut.Party.Id);
+            #endregion
+        }
+
+        [Fact]
+        public void WeShouldCanAssignGivenPartyAsIndividualPartyToPrincipal()
+        {
+            #region Arrange
+            Party party = new IndividualParty(Guid.Parse(SOME_ID),SOME_NAME, SOME_NAME , SOME_STRING);
+            #endregion
+
+            #region Act
+            sut.Party = party;
+            #endregion
+
+            #region Assert
+            Assert.Equal(party.Id, sut.Party.Id);
+            #endregion
+        }
+
     }
 }
+
+
