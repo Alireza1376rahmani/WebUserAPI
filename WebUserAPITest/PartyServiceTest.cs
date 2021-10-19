@@ -9,6 +9,8 @@ using Moq;
 using Domain;
 using WebUserAPI.Services;
 using WebUserAPI.Model;
+using AutoMapper;
+using WebUserAPI.Model.mappings;
 
 namespace WebUserAPITest
 {
@@ -30,6 +32,7 @@ namespace WebUserAPITest
             mockRepo.Setup(x => x.GetById<Party>(It.IsAny<Guid>())).Returns<Guid>(id => new IndividualParty(id, SOME_NAME, SOME_NAME, SOME_STRING));
             mockRepo.Setup(x => x.GetById<IndividualParty>(It.IsAny<Guid>())).Returns<Guid>(id => new IndividualParty(id, SOME_NAME, SOME_NAME, SOME_STRING));
             mockRepo.Setup(x => x.GetById<BusinessParty>(It.IsAny<Guid>())).Returns<Guid>(id => new BusinessParty(id, SOME_NAME, SOME_STRING));
+            
             sut = new PartyService(mockRepo.Object);
         }
 
@@ -106,7 +109,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            sut.GetAllParties();
+            var act = sut.GetAllParties();
             #endregion
 
             #region Assert
@@ -125,7 +128,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            sut.GetPartyById(command);
+            var Act = sut.GetPartyById(command);
             #endregion
 
             #region Assert
@@ -155,7 +158,7 @@ namespace WebUserAPITest
         }
 
         [Fact]
-        public void GtaModel()
+        public void Update_MustUpdateEntirePartyData_WithProperDataModel()
         {
             #region Arrange
             var command = new PutPartyCommand
@@ -172,8 +175,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.Delete(It.IsAny<Party>()), Times.Once);
-            mockRepo.Verify(x => x.Create(It.IsAny<Party>()), Times.Once);
+            mockRepo.Verify(x => x.Update(It.IsAny<Party>()), Times.Once);
             mockRepo.Verify(x => x.Save());
             #endregion
         }

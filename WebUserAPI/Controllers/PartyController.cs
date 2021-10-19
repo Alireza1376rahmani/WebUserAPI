@@ -33,7 +33,8 @@ namespace WebUserAPI.Controllers
         {
             var command = new ReadPartyCommand();
             command.Id = id;
-            return Ok(partyService.GetPartyById(command));
+            var party = partyService.GetPartyById(command);
+            return Ok(party);
         }
 
         [HttpPost]

@@ -10,8 +10,8 @@ namespace Domain
     {
         public string NationalId { get; private set; }
 
-        public BusinessParty(Guid id, string name, string nationalId) : base(id, name) {
-            NationalId = nationalId;
+        public BusinessParty(Guid Id, string Name, string NationalId) : base(Id, Name) {
+            this.NationalId = NationalId;
         }
 
 

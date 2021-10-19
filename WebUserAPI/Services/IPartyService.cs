@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using WebUserAPI.Model;
+using WebUserAPI.Model.mappings;
 
 namespace WebUserAPI.Services
 {
@@ -9,8 +10,8 @@ namespace WebUserAPI.Services
     {
         Guid CreateParty(CreatePartyCommand command);
         void DeleteParty(DeletePartyCommand command);
-        List<Party> GetAllParties();
-        Party GetPartyById(ReadPartyCommand command);
+        List<PartyDto> GetAllParties();
+        PartyDto GetPartyById(ReadPartyCommand command);
         void UpdatePartyName(PatchPartyCommand command);
         public void Update(PutPartyCommand command);
     }

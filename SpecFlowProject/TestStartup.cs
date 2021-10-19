@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Domain;
 using InfraStructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebUserAPI.Controllers;
 using WebUserAPI.Model;
+using WebUserAPI.Model.mappings;
 using WebUserAPI.Services;
 
 namespace SpecFlowProject
@@ -25,12 +27,26 @@ namespace SpecFlowProject
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
+
             services.AddDbContext<MyContext>();
             var assembly = typeof(PrincipalController).Assembly;
+
             services.AddScoped<IRepository<Domain.Principal>, PrincipalDBRepository>();
             services.AddScoped<IRepository<Party>, PartyDBRepository>();
+
             services.AddScoped<IPrincipalService, PrincipalService>();
             services.AddScoped<IPartyService, PartyService>();
+
             services.AddControllers()
                 .AddApplicationPart(assembly);
         }

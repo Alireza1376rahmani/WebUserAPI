@@ -1,19 +1,28 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUserAPI.Model;
+using WebUserAPI.Model.mappings;
 
 namespace WebUserAPI.Services
 {
     public class PartyService : IPartyService
     {
         private readonly IRepository<Party> repository;
+        private readonly IMapper _mapper;
 
         public PartyService(IRepository<Party> repository)
         {
             this.repository = repository;
+        }
+
+        public PartyService(IRepository<Party> repository, IMapper mapper)
+        {
+            this.repository = repository;
+            _mapper = mapper;
         }
 
         public Guid CreateParty(CreatePartyCommand command)
@@ -40,16 +49,29 @@ namespace WebUserAPI.Services
             repository.Save();
         }
 
-        public List<Party> GetAllParties()
+        public List<PartyDto> GetAllParties()
         {
-            return repository.GetAll();
+            return repository.GetAll().Select(x => _mapper.Map<PartyDto>(x)).ToList();
         }
 
-        public Party GetPartyById(ReadPartyCommand command)
+        public PartyDto GetPartyById(ReadPartyCommand command)
         {
             var party = repository.GetById<Party>(command.Id);
-            if (party is BusinessParty) return party as BusinessParty;
-            return party as IndividualParty;
+            var dto = mapPartyToPartyDto(party);
+
+            return dto;
+        }
+
+        private PartyDto mapPartyToPartyDto(Party party)
+        {
+            return new PartyDto
+            {
+                Id = party.Id,
+                Type = ,
+                Name = party.Name,
+                LastName = party.LastName,
+                NationalNumber = party.NationalId
+            }
         }
 
         public void UpdatePartyName(PatchPartyCommand command)
@@ -64,15 +86,12 @@ namespace WebUserAPI.Services
         {
             Party party = repository.GetById<Party>(command.Id);
 
-            repository.Delete(party); 
-            repository.Save();
-
             if (getpartyType(party) == "business")
                 party = new BusinessParty(command.Id, command.Name, command.NationalNumber);
             else
                 party = new IndividualParty(command.Id,command.Name, command.LastName, command.NationalNumber);
 
-            repository.Create(party);
+            repository.Update(party);
             repository.Save();
         }
 
