@@ -29,16 +29,29 @@ namespace InfraStructure.Data
                 .OnDelete(DeleteBehavior.NoAction);
             });
 
+            //modelBuilder.Entity<Principal>()
+            //.OwnsOne(p => p.Party
+            //{
+            //    a.HasOne<Party>()
+            //    .WithOne()
+            //    .HasForeignKey(z => z.GroupId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+            //});
+
             modelBuilder.Entity<Principal>()
                 .HasOne<Party>(p => p.Party)
                 .WithOne()
-                .HasForeignKey("partyId");
+                .HasForeignKey<Party>();
 
             modelBuilder.Entity<Principal>()
                 .HasDiscriminator()
                 .HasValue<User>("User")
                 .HasValue<Group>("Group");
 
+            modelBuilder.Entity<Party>()
+                .HasDiscriminator()
+                .HasValue<BusinessParty>("Business")
+                .HasValue<IndividualParty>("Individual");
 
         }
     }
