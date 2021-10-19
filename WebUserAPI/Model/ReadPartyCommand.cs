@@ -5,6 +5,5 @@ namespace WebUserAPI
     public class ReadPartyCommand
     {
         public Guid Id { get; set; }
-        public string Type { get; set; }
     }
 }

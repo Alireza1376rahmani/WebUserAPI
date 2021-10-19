@@ -47,15 +47,15 @@ namespace WebUserAPI.Services
 
         public Party GetPartyById(ReadPartyCommand command)
         {
-            if (command.Type == "business")
-                return repository.GetById<BusinessParty>(command.Id);
-            return repository.GetById<IndividualParty>(command.Id);
+            var party = repository.GetById<Party>(command.Id);
+            if (party is BusinessParty) return party as BusinessParty;
+            return party as IndividualParty;
         }
 
         public void UpdatePartyName(PatchPartyCommand command)
         {
             var party = repository.GetById<Party>(command.Id);
-            party.Name = command.Name;
+            party.UpdateName(command.Name);
             repository.Update(party);
             repository.Save();
         }

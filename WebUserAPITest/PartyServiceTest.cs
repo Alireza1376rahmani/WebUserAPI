@@ -115,13 +115,12 @@ namespace WebUserAPITest
         }
 
         [Fact]
-        public void GetPartyById_MustReturnCorrectBusinessParty_WithProperDataModel()
+        public void GetPartyById_MustReturnCorrectParty_WithProperDataModel()
         {
             #region Arrange
             var command = new ReadPartyCommand
             {
                 Id = Guid.Parse(SOME_GUID),
-                Type = "business"
             };
             #endregion
 
@@ -130,27 +129,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Assert
-            mockRepo.Verify(x => x.GetById<BusinessParty>(It.Is<Guid>(i => i == command.Id)), Times.Once);
-            #endregion
-        }
-
-        [Fact]
-        public void GetPartyById_MustReturnCorrectIndividualParty_WithProperDataModel()
-        {
-            #region Arrange
-            var command = new ReadPartyCommand
-            {
-                Id = Guid.Parse(SOME_GUID),
-                Type = "individual"
-            };
-            #endregion
-
-            #region Act
-            sut.GetPartyById(command);
-            #endregion
-
-            #region Assert
-            mockRepo.Verify(x => x.GetById<IndividualParty>(It.Is<Guid>(i => i == command.Id)), Times.Once);
+            mockRepo.Verify(x => x.GetById<Party>(It.Is<Guid>(i => i == command.Id)), Times.Once);
             #endregion
         }
 

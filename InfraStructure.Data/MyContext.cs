@@ -40,8 +40,8 @@ namespace InfraStructure.Data
 
             modelBuilder.Entity<Principal>()
                 .HasOne<Party>(p => p.Party)
-                .WithOne()
-                .HasForeignKey<Party>();
+                .WithOne();
+               // .HasForeignKey<Party>();
 
             modelBuilder.Entity<Principal>()
                 .HasDiscriminator()

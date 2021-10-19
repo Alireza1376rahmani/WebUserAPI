@@ -29,8 +29,9 @@ namespace WebUserAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id, [FromBody] ReadPartyCommand command)
+        public IActionResult Get(Guid id)
         {
+            var command = new ReadPartyCommand();
             command.Id = id;
             return Ok(partyService.GetPartyById(command));
         }

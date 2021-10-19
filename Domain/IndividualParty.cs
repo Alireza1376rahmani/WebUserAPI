@@ -8,8 +8,8 @@ namespace Domain
 {
     public class IndividualParty : Party
     {
-        public string LastName { get; set; }
-        public string NationalCode { get; set; }
+        public string LastName { get; private set; }
+        public string NationalCode { get; private set; }
 
         public IndividualParty(Guid id, string name, string lastName, string nationalCode) : base(id, name)
         {

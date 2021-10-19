@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -18,15 +17,15 @@ using Xunit;
 
 namespace SpecFlowProject.Steps
 {
-    [Binding]
+   //[Binding]
     public class PrincipalManagementStepDefinition : IClassFixture<CustomWebApplicationFactory<TestStartup>>
     {
-        private CreatePrincipalCommand command;
-        private WebApplicationFactory<TestStartup> _factory;
-        private List<Guid> _identifiers;
-        private Principal principal = null;
-
-        private HttpClient _client { get; set; }
+        protected CreatePrincipalCommand command;
+        protected WebApplicationFactory<TestStartup> _factory;
+        protected List<Guid> _identifiers;
+        protected Principal principal = null;
+        
+        protected HttpClient _client { get; set; }
         protected HttpResponseMessage Response { get; set; }
 
         public PrincipalManagementStepDefinition(CustomWebApplicationFactory<TestStartup> factory)
@@ -101,6 +100,7 @@ namespace SpecFlowProject.Steps
                 Name = command.Name,
                 Order = PrincipalPatchType.ChangeName,
             };
+            
             uCommand.Id = _identifiers[0];
 
             var putRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
@@ -191,11 +191,6 @@ namespace SpecFlowProject.Steps
             Assert.NotNull(principal);
             Assert.Equal(_identifiers[1], principal.Id);
             Assert.Null(principal.Groups.Find(g => g.GroupId == _identifiers[1]));
-        }
-
-        [Then(@"I will find the user with his groups")]
-        public void ThenIWillFindTheUserWithHisGroups()
-        {
         }
 
         [When(@"I register the user with registered group as default")]

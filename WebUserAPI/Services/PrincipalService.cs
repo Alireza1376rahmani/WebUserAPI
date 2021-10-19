@@ -48,7 +48,7 @@ namespace WebUserAPI.Services
         public Model.Principal GetPrincipalById(Model.ReadPrincipalCommand command)
         {
             var principal = repository.GetById<Principal>(command.Id);
-            return mapPrincipal(principal, true);;
+            return mapPrincipal(principal, true);
         }
         private Model.Principal mapPrincipal(Principal principal, bool needMapGroups)
         {

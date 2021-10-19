@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfraStructure.Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211019062620_init")]
+    [Migration("20211019115851_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,7 @@ namespace InfraStructure.Data.Migrations
             modelBuilder.Entity("Domain.Party", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Discriminator")
@@ -54,10 +55,13 @@ namespace InfraStructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("partyId")
+                    b.Property<Guid>("PartyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PartyId")
+                        .IsUnique();
 
                     b.ToTable("Principals");
 
@@ -67,6 +71,9 @@ namespace InfraStructure.Data.Migrations
             modelBuilder.Entity("Domain.BusinessParty", b =>
                 {
                     b.HasBaseType("Domain.Party");
+
+                    b.Property<string>("NationalId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Business");
                 });
@@ -98,17 +105,14 @@ namespace InfraStructure.Data.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
-            modelBuilder.Entity("Domain.Party", b =>
-                {
-                    b.HasOne("Domain.Principal", null)
-                        .WithOne("Party")
-                        .HasForeignKey("Domain.Party", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Principal", b =>
                 {
+                    b.HasOne("Domain.Party", "Party")
+                        .WithOne()
+                        .HasForeignKey("Domain.Principal", "PartyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsMany("Domain.Membership", "Memberships", b1 =>
                         {
                             b1.Property<Guid>("PrincipalId")
@@ -142,10 +146,7 @@ namespace InfraStructure.Data.Migrations
                         });
 
                     b.Navigation("Memberships");
-                });
 
-            modelBuilder.Entity("Domain.Principal", b =>
-                {
                     b.Navigation("Party");
                 });
 #pragma warning restore 612, 618

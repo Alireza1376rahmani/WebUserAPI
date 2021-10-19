@@ -32,10 +32,12 @@ namespace WebUserAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IRepository<Domain.Principal>, PrincipalRepository>();
+            services.AddScoped<IRepository<Domain.Principal>, PrincipalDBRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
-            services.AddScoped<IWeatherService, WeatherService>();
             services.AddDbContext<MyContext>();
+
+            services.AddScoped<IRepository<Party>, PartyDBRepository>();
+            services.AddScoped<IPartyService, PartyService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
