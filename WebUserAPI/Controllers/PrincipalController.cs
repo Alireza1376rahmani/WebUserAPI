@@ -50,7 +50,7 @@ namespace WebUserAPI.Controllers
             return Ok(guid);
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public IActionResult JoinToGroup(Guid id, [FromBody] PatchPrincipalCommand command)
         {
             command.Id = id;

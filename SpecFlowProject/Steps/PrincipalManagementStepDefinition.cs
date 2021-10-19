@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -103,7 +104,8 @@ namespace SpecFlowProject.Steps
             uCommand.Id = _identifiers[0];
 
             var putRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
-            Response = await _client.PutAsJsonAsync(putRelativeUri, uCommand).ConfigureAwait(false);
+            var content = new StringContent(JsonSerializer.Serialize(uCommand), Encoding.UTF8, "application/json-patch+json");
+            Response = await _client.PatchAsync(putRelativeUri, content).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
             _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
         }
