@@ -27,8 +27,10 @@ namespace SpecFlowProject
         {
             services.AddDbContext<MyContext>();
             var assembly = typeof(PrincipalController).Assembly;
-            services.AddSingleton<IRepository<Domain.Principal>, DBRepository>();
+            services.AddSingleton<IRepository<Domain.Principal>, PrincipalDBRepository>();
+            services.AddSingleton<IRepository<Party>, PartyDBRepository>();
             services.AddScoped<IPrincipalService, PrincipalService>();
+            services.AddScoped<IPartyService, PartyService>();
             services.AddControllers()
                 .AddApplicationPart(assembly);
         }

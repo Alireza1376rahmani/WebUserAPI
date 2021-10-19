@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace InfraStructure.Data
 {
-    public class DBRepository : IRepository<Principal>
+    public class PrincipalDBRepository : IRepository<Principal>
     {
         private readonly MyContext ctx;
 
-        public DBRepository(MyContext ctx)
+        public PrincipalDBRepository(MyContext ctx)
         {
             this.ctx = ctx;
         }
