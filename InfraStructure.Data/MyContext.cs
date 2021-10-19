@@ -31,17 +31,15 @@ namespace InfraStructure.Data
 
             modelBuilder.Entity<Principal>()
                 .HasOne<Party>(p => p.Party)
-                .WithOne();
+                .WithOne()
+                .HasForeignKey("partyId");
 
             modelBuilder.Entity<Principal>()
                 .HasDiscriminator()
                 .HasValue<User>("User")
                 .HasValue<Group>("Group");
 
-            modelBuilder.Entity<Party>()
-                .HasDiscriminator()
-                .HasValue<IndividualParty>("Individual")
-                .HasValue<BusinessParty>("Business");
+
         }
     }
 }
