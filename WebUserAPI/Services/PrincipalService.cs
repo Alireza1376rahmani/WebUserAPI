@@ -43,7 +43,7 @@ namespace WebUserAPI.Services
         }
         public List<Model.Principal> GetAllPrincipals()
         {
-            return repository.GetAll().Select(x=>mapPrincipal(x,true)).ToList();
+            return repository.GetAll().Select<Principal,Model.Principal>(x=>mapPrincipal(x,true)).ToList();
         }
         public Model.Principal GetPrincipalById(Model.ReadPrincipalCommand command)
         {

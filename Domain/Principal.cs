@@ -12,8 +12,8 @@ namespace Domain
         [Required]
         public string Name { get; private set; }
         public List<Membership> Memberships { get; private set; }
-        public Party Party { get; set; }
-        public Guid PartyId { get; set; }
+        public Party? Party { get; set; }
+        public Guid? PartyId { get; set; }
 
         public Principal(Guid id, string name) : base(id)
         {

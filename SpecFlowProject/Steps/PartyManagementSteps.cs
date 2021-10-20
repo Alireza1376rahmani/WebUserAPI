@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using WebUserAPI;
+using WebUserAPI.Model.mappings;
 using Xunit;
 
 namespace SpecFlowProject.Steps
@@ -16,7 +17,7 @@ namespace SpecFlowProject.Steps
     {
         public PartyManagementStepDefenition(CustomWebApplicationFactory<TestStartup> factory) : base(factory) { }
 
-        public Party party { get; set; }
+        public PartyDto party { get; set; }
         public CreatePartyCommand cCommand { get; set; }
 
         [Given(@"A party is defined as :")]
@@ -38,14 +39,14 @@ namespace SpecFlowProject.Steps
         public async Task WhenIGetThePartyById()
         {
             var getRelativeUri = new Uri($"Party/{{{_identifiers[0]}}}", UriKind.Relative);
-             party = await _client.GetFromJsonAsync<Party>(getRelativeUri); 
+             party = await _client.GetFromJsonAsync<PartyDto>(getRelativeUri); 
         }
 
         [Then(@"I will find the party")]
         public void ThenIWillFindTheParty()
         {
             Assert.NotNull(party);
-            Assert.Equal(cCommand.Type, party.GetType().ToString());
+            Assert.Equal(cCommand.Type, party.Type);
             Assert.Equal(cCommand.Name, party.Name);
             Assert.Equal(_identifiers[0], party.Id);
         }

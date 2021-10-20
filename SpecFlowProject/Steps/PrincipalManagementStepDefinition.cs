@@ -17,14 +17,14 @@ using Xunit;
 
 namespace SpecFlowProject.Steps
 {
-   //[Binding]
+    //[Binding]
     public class PrincipalManagementStepDefinition : IClassFixture<CustomWebApplicationFactory<TestStartup>>
     {
         protected CreatePrincipalCommand command;
         protected WebApplicationFactory<TestStartup> _factory;
         protected List<Guid> _identifiers;
         protected Principal principal = null;
-        
+
         protected HttpClient _client { get; set; }
         protected HttpResponseMessage Response { get; set; }
 
@@ -100,11 +100,11 @@ namespace SpecFlowProject.Steps
                 Name = command.Name,
                 Order = PrincipalPatchType.ChangeName,
             };
-            
             uCommand.Id = _identifiers[0];
 
             var putRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
             var content = new StringContent(JsonSerializer.Serialize(uCommand), Encoding.UTF8, "application/json-patch+json");
+
             Response = await _client.PatchAsync(putRelativeUri, content).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
             _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
@@ -146,14 +146,16 @@ namespace SpecFlowProject.Steps
         [When(@"I join the user to the group")]
         public async Task WhenIJoinTheUserToTheGroup()
         {
-            var jCommand = new PatchPrincipalCommand
+            PatchPrincipalCommand jCommand = new PatchPrincipalCommand
             {
-                Order = PrincipalPatchType.JoinToGroup,
                 GroupId = _identifiers[0],
+                Order = PrincipalPatchType.JoinToGroup,
             };
-            var patchRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
-            Response = await _client.PutAsJsonAsync(patchRelativeUri, jCommand).ConfigureAwait(false);
 
+            var patchRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
+            var content = new StringContent(JsonSerializer.Serialize(jCommand), Encoding.UTF8, "application/json-patch+json");
+
+            Response = await _client.PatchAsync(patchRelativeUri, content).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
         }
 
@@ -180,8 +182,10 @@ namespace SpecFlowProject.Steps
                 GroupId = _identifiers[0],
             };
 
-            var putRelativeUri = new Uri($"Principal/{{{ _identifiers.Last() }}}", UriKind.Relative);
-            Response = await _client.PutAsJsonAsync(putRelativeUri, lCommand).ConfigureAwait(false);
+            var patchRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
+            var content = new StringContent(JsonSerializer.Serialize(lCommand), Encoding.UTF8, "application/json-patch+json");
+
+            Response = await _client.PatchAsync(patchRelativeUri, content).ConfigureAwait(false);
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
         }
 

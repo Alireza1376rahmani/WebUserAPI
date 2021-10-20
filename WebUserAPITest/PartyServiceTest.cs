@@ -106,6 +106,7 @@ namespace WebUserAPITest
         public void GetAllParties_MustCallGetAllMethodFromRepository()
         {
             #region Arrange
+            mockRepo.Setup(x => x.GetAll()).Returns(new List<Party>());
             #endregion
 
             #region Act

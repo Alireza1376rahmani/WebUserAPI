@@ -51,7 +51,7 @@ namespace WebUserAPI.Services
 
         public List<PartyDto> GetAllParties()
         {
-            return repository.GetAll().Select(x => _mapper.Map<PartyDto>(x)).ToList();
+            return repository.GetAll().Select<Party,PartyDto>(x => mapPartyToPartyDto(x)).ToList();
         }
 
         public PartyDto GetPartyById(ReadPartyCommand command)
@@ -64,14 +64,27 @@ namespace WebUserAPI.Services
 
         private PartyDto mapPartyToPartyDto(Party party)
         {
-            return new PartyDto
-            {
-                Id = party.Id,
-                Type = ,
-                Name = party.Name,
-                LastName = party.LastName,
-                NationalNumber = party.NationalId
-            }
+            PartyDto p;
+
+            if (party is BusinessParty)
+                p = new PartyDto
+                {
+                    Id = party.Id,
+                    Type = "business",
+                    Name = party.Name,
+                    LastName = null,
+                    NationalNumber = (party as BusinessParty).NationalId
+                };
+            else
+                p = new PartyDto
+                {
+                    Id = party.Id,
+                    Name = party.Name,
+                    LastName = (party as IndividualParty).LastName,
+                    NationalNumber = (party as IndividualParty).NationalCode,
+                };
+
+            return p;
         }
 
         public void UpdatePartyName(PatchPartyCommand command)
@@ -89,7 +102,7 @@ namespace WebUserAPI.Services
             if (getpartyType(party) == "business")
                 party = new BusinessParty(command.Id, command.Name, command.NationalNumber);
             else
-                party = new IndividualParty(command.Id,command.Name, command.LastName, command.NationalNumber);
+                party = new IndividualParty(command.Id, command.Name, command.LastName, command.NationalNumber);
 
             repository.Update(party);
             repository.Save();

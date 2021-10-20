@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfraStructure.Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211019115851_init")]
+    [Migration("20211020054256_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,13 +55,14 @@ namespace InfraStructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PartyId")
+                    b.Property<Guid?>("PartyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PartyId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PartyId] IS NOT NULL");
 
                     b.ToTable("Principals");
 
@@ -109,9 +110,7 @@ namespace InfraStructure.Data.Migrations
                 {
                     b.HasOne("Domain.Party", "Party")
                         .WithOne()
-                        .HasForeignKey("Domain.Principal", "PartyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Domain.Principal", "PartyId");
 
                     b.OwnsMany("Domain.Membership", "Memberships", b1 =>
                         {

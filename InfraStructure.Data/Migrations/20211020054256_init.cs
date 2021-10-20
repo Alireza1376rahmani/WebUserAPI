@@ -29,7 +29,7 @@ namespace InfraStructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -40,7 +40,7 @@ namespace InfraStructure.Data.Migrations
                         column: x => x.PartyId,
                         principalTable: "Parties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,7 +78,8 @@ namespace InfraStructure.Data.Migrations
                 name: "IX_Principals_PartyId",
                 table: "Principals",
                 column: "PartyId",
-                unique: true);
+                unique: true,
+                filter: "[PartyId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
