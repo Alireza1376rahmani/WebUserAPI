@@ -60,8 +60,9 @@ namespace WebUserAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id , [FromBody] DeletePartyCommand command)
+        public IActionResult Delete(Guid id)
         {
+            var command = new DeletePartyCommand();
             command.Id = id;
             partyService.DeleteParty(command);
             return Ok();

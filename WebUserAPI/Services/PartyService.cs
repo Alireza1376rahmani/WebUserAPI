@@ -62,7 +62,7 @@ namespace WebUserAPI.Services
             return dto;
         }
 
-        private PartyDto mapPartyToPartyDto(Party party)
+        public static PartyDto mapPartyToPartyDto(Party party)
         {
             PartyDto p;
 

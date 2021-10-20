@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUserAPI.Model.mappings;
 
 namespace WebUserAPI.Services
 {
@@ -54,12 +55,16 @@ namespace WebUserAPI.Services
         }
         private Model.Principal mapPrincipal(Principal principal, bool needMapGroups)
         {
+            var modelpParty = new PartyDto();
+            if(principal.PartyId != null)
+                modelpParty=  PartyService.mapPartyToPartyDto(principal.Party); // HERE
             return new Model.Principal
             {
                 Type = getPrincipalType(principal),
                 Id = principal.Id,
                 Name = principal.Name,
-                Groups = needMapGroups? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>()
+                Groups = needMapGroups ? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>(),
+                Party = modelpParty
             };
         }
         private string getPrincipalType(Principal principal)

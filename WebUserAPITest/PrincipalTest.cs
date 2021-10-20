@@ -46,6 +46,23 @@ namespace WebUserAPITest
         }
 
         [Fact]
+        public void AssignParty_MustAssignGivenParty()
+        {
+            #region Arrange
+            Party party = new BusinessParty(Guid.Parse(SOME_ID), SOME_NAME, SOME_STRING);
+            #endregion
+
+            #region Act
+            sut.AssignParty(party);
+            #endregion
+
+            #region Assert
+            Assert.NotNull(sut.Party);
+            Assert.Equal(party.Id,sut.Party.Id);
+            #endregion
+        }
+
+        [Fact]
         public void RemoveGroup_MustRemoveGivenGroupFromListOfGroups()
         {
             #region Arrange

@@ -31,7 +31,7 @@ Scenario: Register a User with groups
 		| Name      |
 		| hisGroups |
 	And A user is defined as:
-		| Name   |
+		| Name  |
 		| cUser |
 	When I register the user with registered group as default
 	And I get the user by Id
@@ -59,3 +59,14 @@ Scenario: a User leaves a group
 	When I leave the user from group
 	And I get the user by Id
 	Then I will not find the group in groups of user
+
+Scenario: a User assigns his party
+	Given A Party is registered as:
+		| Type       | Name       | LastName | NationalNumber |
+		| individual | Ali hastam | Buddy    | 1230099905     |
+	And 	A user is registered as:
+		| Name  |
+		| AUser |
+	When I assign the party to the user
+	And I get the user by Id
+	Then I will find the user with the party

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-
+using WebUserAPI.Model.mappings;
 
 namespace WebUserAPI.Model
 {
@@ -14,6 +14,7 @@ namespace WebUserAPI.Model
         public Guid Id { get; set; }
         public string Name { get; set; }
         public List<Membership> Groups { get; set; }
+        public PartyDto Party { get; set; }
     }
 
     public class Membership

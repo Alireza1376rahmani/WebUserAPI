@@ -162,8 +162,7 @@ namespace SpecFlowProject.Steps
         [Then(@"I will find the user with the group")]
         public void ThenIWillFindTheUserWithTheGroup()
         {
-            Assert.NotNull(principal);
-            Assert.Equal(_identifiers[1], principal.Id);
+            validateUser();
             Assert.NotNull(principal.Groups.Find(g => g.GroupId.Equals(_identifiers[0])));
         }
 
@@ -192,9 +191,14 @@ namespace SpecFlowProject.Steps
         [Then(@"I will not find the group in groups of user")]
         public void ThenIWillNotFindTheGroupInGroupsOfUser()
         {
+            validateUser();
+            Assert.Null(principal.Groups.Find(g => g.GroupId == _identifiers[1]));
+        }
+
+        private void validateUser()
+        {
             Assert.NotNull(principal);
             Assert.Equal(_identifiers[1], principal.Id);
-            Assert.Null(principal.Groups.Find(g => g.GroupId == _identifiers[1]));
         }
 
         [When(@"I register the user with registered group as default")]
@@ -212,6 +216,31 @@ namespace SpecFlowProject.Steps
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
             _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
         }
+        
+
+        [When(@"I assign the party to the user")]
+        public async Task WhenIAssignThePartyToTheUser()
+        {
+            var aCommand = new PatchPrincipalCommand
+            {
+                Order = PrincipalPatchType.AssignParty,
+                PartyId = _identifiers[0],
+            };
+            var patchRelativeUri = new Uri($"Principal/{{{_identifiers.Last()}}}", UriKind.Relative);
+            var content = new StringContent(JsonSerializer.Serialize(aCommand), Encoding.UTF8, "application/json-patch+json");
+
+            Response = await _client.PatchAsync(patchRelativeUri, content).ConfigureAwait(false);
+            Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+        }
+
+        [Then(@"I will find the user with the party")]
+        public void ThenIWillFindTheUserWithTheParty()
+        {
+            validateUser();
+            Assert.Equal(_identifiers[0], principal.Party.Id);
+        }
+
+
 
 
     }
