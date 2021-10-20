@@ -13,7 +13,7 @@ namespace Domain
         public string Name { get; private set; }
         public List<Membership> Memberships { get; private set; }
         public Party? Party { get; set; }
-        public Guid? PartyId { get; set; }
+        public Guid? PartyId { get; set ; }
 
         public Principal(Guid id, string name) : base(id)
         {
@@ -35,6 +35,12 @@ namespace Domain
         {
             var membership = Memberships.FirstOrDefault(m => m.GroupId == group.Id);
             Memberships.Remove(membership);
+        }
+
+        public void AssignParty(Party party)
+        {
+            this.Party = party;
+            PartyId = party.Id;
         }
 
     }

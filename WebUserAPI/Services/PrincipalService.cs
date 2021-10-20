@@ -9,10 +9,12 @@ namespace WebUserAPI.Services
     public class PrincipalService : IPrincipalService
     {
         protected readonly IRepository<Principal> repository;
+        protected readonly IRepository<Party> partyRepo;
 
-        public PrincipalService(IRepository<Principal> repository)
+        public PrincipalService(IRepository<Principal> repository, IRepository<Party> partyRepo)
         {
             this.repository = repository;
+            this.partyRepo = partyRepo;
         }
 
         public Guid CreatePrincipal(Model.CreatePrincipalCommand command)
@@ -93,6 +95,17 @@ namespace WebUserAPI.Services
             thePrincipal.RemoveGroup(theGroup);
 
             repository.Update(thePrincipal);
+            repository.Save();
+        }
+
+        public void AssignParty(Model.PatchPrincipalCommand command)
+        {
+            var principal = repository.GetById<Principal>(command.Id);
+            var party = partyRepo.GetById<Party>(command.PartyId);
+
+            principal.AssignParty(party);
+
+            repository.Update(principal);
             repository.Save();
         }
     }

@@ -8,6 +8,7 @@ namespace WebUserAPI.Model
         public string Name { get; set; }
         public Guid Id { get; set; }
         public Guid GroupId { get; set; }
+        public Guid PartyId { get; set; }
     }
 }
 

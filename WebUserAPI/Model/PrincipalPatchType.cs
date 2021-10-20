@@ -4,7 +4,8 @@
     {
         JoinToGroup,
         LeaveGroup,
-        ChangeName
+        ChangeName,
+        AssignParty
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using WebUserAPI.Model;
 
@@ -13,5 +14,6 @@ namespace WebUserAPI.Services
         void PrincipalJoinsToGroup(PatchPrincipalCommand command);
         void PrincipalLeavesGroup(PatchPrincipalCommand command);
         void UpdatePrincipal(PatchPrincipalCommand command);
+        void AssignParty(PatchPrincipalCommand command);
     }
 }

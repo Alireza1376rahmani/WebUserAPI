@@ -65,6 +65,9 @@ namespace WebUserAPI.Controllers
                 case PrincipalPatchType.LeaveGroup:
                     principalService.PrincipalLeavesGroup(command);
                     return Ok();
+                case PrincipalPatchType.AssignParty:
+                    principalService.AssignParty(command);
+                    return Ok();
             }
             return NotFound("set the order in your command");
         }
