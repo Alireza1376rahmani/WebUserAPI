@@ -185,7 +185,7 @@ namespace WebUserAPITest
             #region Assert
             mockRepo.Verify(x => x.GetById<Principal>(It.Is<Guid>(g => g == Guid.Parse(SOME_ID))), Times.Once);
             partyMockRepo.Verify(x => x.GetById<Party>(It.Is<Guid>(g => g == partyId)), Times.Once);
-            mockRepo.Verify(x => x.Update(It.Is<Principal>(p => p.Party.PartyId == partyId)));
+            mockRepo.Verify(x => x.Update(It.Is<User>(p => p.Party.PartyId == partyId)));
             mockRepo.Verify(x => x.Save());
             #endregion  
         }

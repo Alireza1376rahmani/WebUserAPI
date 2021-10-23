@@ -46,7 +46,7 @@ namespace WebUserAPI.Services
         }
         public List<Model.Principal> GetAllPrincipals()
         {
-            return repository.GetAll().Select<Principal,Model.Principal>(x=>mapPrincipal(x,true)).ToList();
+            return repository.GetAll().Select<Principal, Model.Principal>(x => mapPrincipal(x, true)).ToList();
         }
         public Model.Principal GetPrincipalById(Model.ReadPrincipalCommand command)
         {
@@ -55,15 +55,19 @@ namespace WebUserAPI.Services
         }
         private Model.Principal mapPrincipal(Principal principal, bool needMapGroups)
         {
-            return new Model.Principal
+            var model = new Model.Principal
             {
                 Type = getPrincipalType(principal),
                 Id = principal.Id,
                 Name = principal.Name,
                 Groups = needMapGroups ? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>(),
-                PartyId = principal.Party?.PartyId,
-                JoinDate = principal.Party?.JoinDate
             };
+            if (principal is User)
+            {
+                model.PartyId = (principal as User).Party?.PartyId;
+                model.JoinDate = (principal as User).Party?.JoinDate;
+            }
+            return model;
         }
         private string getPrincipalType(Principal principal)
         {
@@ -103,7 +107,8 @@ namespace WebUserAPI.Services
 
         public void AssignParty(Model.PatchPrincipalCommand command)
         {
-            var principal = repository.GetById<Principal>(command.Id);
+
+            var principal = repository.GetById<User>(command.Id);
             var party = partyRepo.GetById<Party>(command.PartyId);
 
             principal.AssignParty(party);

@@ -33,7 +33,7 @@ namespace InfraStructure.Data
             //    .WithOne();
             //.HasForeignKey<Party>();
 
-            modelBuilder.Entity<Principal>()
+            modelBuilder.Entity<User>()
                 .OwnsOne(p => p.Party, a =>
                 {
                     a.HasOne<Party>().

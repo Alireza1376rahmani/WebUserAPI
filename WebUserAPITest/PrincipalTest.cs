@@ -46,23 +46,6 @@ namespace WebUserAPITest
         }
 
         [Fact]
-        public void AssignParty_MustAssignGivenParty()
-        {
-            #region Arrange
-            Party party = new BusinessParty(Guid.Parse(SOME_ID), SOME_NAME, SOME_STRING);
-            #endregion
-
-            #region Act
-            sut.AssignParty(party);
-            #endregion
-
-            #region Assert
-            Assert.NotNull(sut.Party);
-            Assert.Equal(party.Id,sut.Party.PartyId);
-            #endregion
-        }
-
-        [Fact]
         public void RemoveGroup_MustRemoveGivenGroupFromListOfGroups()
         {
             #region Arrange
@@ -75,38 +58,6 @@ namespace WebUserAPITest
 
             #region Assert
             Assert.Null(sut.Memberships.Find(group => group.GroupId.Equals(someGroup.Id)));
-            #endregion
-        }
-
-        [Fact]
-        public void WeShouldCanAssignGivenPartyAsBusinessPartyToPrincipal()
-        {
-            #region Arrange
-            Party party = new BusinessParty(Guid.Parse(SOME_ID),SOME_NAME,SOME_STRING);
-            #endregion
-
-            #region Act
-            sut.AssignParty(party);
-            #endregion
-
-            #region Assert
-            Assert.Equal(party.Id, sut.Party.PartyId);
-            #endregion
-        }
-
-        [Fact]
-        public void WeShouldCanAssignGivenPartyAsIndividualPartyToPrincipal()
-        {
-            #region Arrange
-            Party party = new IndividualParty(Guid.Parse(SOME_ID),SOME_NAME, SOME_NAME , SOME_STRING);
-            #endregion
-
-            #region Act
-            sut.AssignParty(party);
-            #endregion
-
-            #region Assert
-            Assert.Equal(party.Id, sut.Party.PartyId);
             #endregion
         }
 

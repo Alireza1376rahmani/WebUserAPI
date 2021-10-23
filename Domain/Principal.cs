@@ -12,7 +12,6 @@ namespace Domain
         [Required]
         public string Name { get; private set; }
         public List<Membership> Memberships { get; private set; }
-        public PartyRef Party { get; private set; }
         public Principal(Guid id, string name) : base(id)
         {
             Name = name;
@@ -35,10 +34,7 @@ namespace Domain
             Memberships.Remove(membership);
         }
 
-        public void AssignParty(Party party)
-        {
-            this.Party = new PartyRef(party.Id, DateTime.Now);
-        }
+        
 
     }
 }
