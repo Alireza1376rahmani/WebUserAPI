@@ -9,9 +9,11 @@ namespace Domain
     {
         public PartyRef Party { get; private set; }
 
-        public User(Guid id, string name) : base(id, name)
+        public User(Guid id, string name,Party party) : base(id, name)
         {
-            Guard.Ensures(() => name.Length > 2, nameof(name));
+            //    Guard.Ensures(() => name.Length > 2, nameof(name));
+            if(party != null)
+                Party = new PartyRef(party.Id, DateTime.Now);
         }
 
         public void AssignParty(Party party)

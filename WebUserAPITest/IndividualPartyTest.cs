@@ -4,14 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.builders;
 
 namespace WebUserAPITest
 {
-    public class IndividualPartyTest : PartyTest<IndividualParty>
+    public class IndividualPartyTest : PartyTest<IndividualParty,IndividualPartyBuilder>
     {
-        protected override IndividualParty GetInstance()
+
+        public IndividualPartyTest()
         {
-            return new IndividualParty(Guid.Parse(SOME_ID),SOME_NAME,SOME_NAME,SOME_STRING);
+            sut = builder.WithLastName(SOME_NAME).WithNationalCode(SOME_STRING).Build();
         }
+
+        protected override IndividualPartyBuilder GetBuilderInstance()
+        {
+            return new IndividualPartyBuilder();
+        }
+        
     }
 }

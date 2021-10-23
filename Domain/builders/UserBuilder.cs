@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace Domain.builders
 {
-    class UserBuilder : PrincipalBuilder<User, UserBuilder>
+    public class UserBuilder : PrincipalBuilder<User, UserBuilder>
     {
+
+        private Party Party = null;
+
+        public UserBuilder WithParty(Party party)
+        {
+            Party = party;
+            return this;
+        }
+
         public override User Build()
         {
-            return new User(id, name);
+            return new User(id, name,Party);
         }
     }
 }

@@ -5,15 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Domain.builders;
 
 namespace WebUserAPITest
 {
-    public class UserTest : PrincipalTest<User>
+    public class UserTest : PrincipalTest<User, UserBuilder>
     {
 
-        protected override User GetInstance()
+        public UserTest()
         {
-            return new User(Guid.Parse(SOME_ID), SOME_NAME);
+            sut = builder.WithParty(new BusinessParty(Guid.NewGuid(), SOME_NAME, SOME_STRING)).Build();
+        }
+
+        protected override UserBuilder GetBuilderInstance()
+        {
+            return new UserBuilder();
         }
 
         [Fact]
@@ -24,7 +30,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            Action act = () => new User(Guid.Parse(SOME_ID), SHORT_NAME) ; 
+            Action act = () => new User(Guid.Parse(SOME_ID), SHORT_NAME,null);
             #endregion
 
             #region Assert
@@ -36,7 +42,11 @@ namespace WebUserAPITest
         public void AssignParty_MustAssignGivenParty()
         {
             #region Arrange
-            Party party = new BusinessParty(Guid.Parse(SOME_ID), SOME_NAME, SOME_STRING);
+            Party party = new BusinessPartyBuilder()
+                .WithId(Guid.Parse(SOME_ID))
+                .WithName(SOME_NAME)
+                .WithNationalId(SOME_STRING)
+                .Build();
             #endregion
 
             #region Act
@@ -57,7 +67,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            (sut as User).AssignParty(party);
+            sut.AssignParty(party);
             #endregion
 
             #region Assert
@@ -82,5 +92,5 @@ namespace WebUserAPITest
             #endregion
         }
 
-    }   
+    }
 }

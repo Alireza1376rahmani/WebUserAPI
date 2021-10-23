@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,17 @@ using Xunit;
 
 namespace WebUserAPITest
 {
-    public class GroupTest : PrincipalTest<Group>
+    public class GroupTest : PrincipalTest<Group, GroupBuilder>
     {
-        protected override Group GetInstance()
+
+        public GroupTest()
         {
-            return new Group(Guid.Parse(SOME_ID),SOME_NAME);
+            sut = builder.Build();
+        }
+
+        protected override GroupBuilder GetBuilderInstance()
+        {
+            return new GroupBuilder();
         }
 
         [Fact]
@@ -20,5 +27,7 @@ namespace WebUserAPITest
         {
             Assert.Equal(sut.Name, sut.Name);
         }
+
+   
     }
 }

@@ -23,7 +23,7 @@ namespace WebUserAPI.Services
             Principal principal;
             var guid = Guid.NewGuid();
             if (command.Type == "user")
-                principal = new User(guid, command.Name);
+                principal = new User(guid, command.Name, null);
             else
                 principal = new Group(guid, command.Name);
 

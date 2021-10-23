@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.builders
 {
-    class BusinessPartyBuilder : PartyBuilder<BusinessParty, BusinessPartyBuilder>
+    public class BusinessPartyBuilder : PartyBuilder<BusinessParty, BusinessPartyBuilder>
     {
 
         private string nationalId;

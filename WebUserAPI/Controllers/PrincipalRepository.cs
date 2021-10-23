@@ -16,7 +16,7 @@ namespace WebUserAPI.Controllers
         {
             list = new Dictionary<Guid, Principal>();
             var guid = Guid.NewGuid();
-            list.Add(guid, new User(guid, "default hastam"));
+            list.Add(guid, new User(guid, "default hastam",null));
         }
 
         public void Create(Principal entity)

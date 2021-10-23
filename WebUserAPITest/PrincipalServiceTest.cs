@@ -20,11 +20,11 @@ namespace WebUserAPITest
 
         public PrincipalServiceTest()
         {
-            SOME_USER = new User(Guid.Parse(SOME_ID), SOME_NAME);
+            SOME_USER = new User(Guid.Parse(SOME_ID), SOME_NAME, null);
             mockRepo = new Mock<IRepository<Principal>>();
             mockRepo.Setup(x => x.Save());
             mockRepo.Setup(x => x.GetById<Principal>(It.IsAny<Guid>())).Returns<Guid>(id => new Group(id, SOME_NAME));
-            mockRepo.Setup(x => x.GetById<User>(It.IsAny<Guid>())).Returns<Guid>(id => new User(id, SOME_NAME));
+            mockRepo.Setup(x => x.GetById<User>(It.IsAny<Guid>())).Returns<Guid>(id => new User(id, SOME_NAME, null));
 
             partyMockRepo = new Mock<IRepository<Party>>();
             partyMockRepo.Setup(x => x.GetById<Party>(It.IsAny<Guid>())).Returns<Guid>(id => new BusinessParty(id, SOME_NAME, "some string"));
@@ -63,8 +63,8 @@ namespace WebUserAPITest
             mockRepo.Setup(x => x.GetAll()).Returns(() =>
             {
                 var principalList = new List<Principal>();
-                principalList.Add(new User(Guid.NewGuid(), SOME_NAME));
-                principalList.Add(new User(Guid.NewGuid(), SOME_NAME));
+                principalList.Add(new User(Guid.NewGuid(), SOME_NAME, null));
+                principalList.Add(new User(Guid.NewGuid(), SOME_NAME, null));
                 return principalList;
             });
             #endregion

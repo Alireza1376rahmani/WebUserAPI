@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.builders
 {
-    public abstract class PrincipalBuilder<TPrincipal,TSelf> : EntityBuilder<Principal,TSelf>
+    public abstract class PrincipalBuilder<TPrincipal,TSelf> : EntityBuilder<TPrincipal,TSelf>
         where TPrincipal: Principal
         where TSelf: PrincipalBuilder<TPrincipal, TSelf>
     {
@@ -16,7 +16,7 @@ namespace Domain.builders
         public PrincipalBuilder<TPrincipal,TSelf> WithName(string name)
         {
             this.name = name;
-            return this;
+            return this as TSelf;
         }
 
     }

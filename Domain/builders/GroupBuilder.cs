@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.builders
 {
-    class GroupBuilder : PrincipalBuilder<Group, GroupBuilder>
+    public class GroupBuilder : PrincipalBuilder<Group, GroupBuilder>
     {
         public override Group Build()
         {

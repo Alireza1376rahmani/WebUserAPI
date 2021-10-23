@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,26 @@ using System.Threading.Tasks;
 
 namespace WebUserAPITest
 {
-    class TestPartyTest : PartyTest<TestParty>
+    class TestPartyTest : PartyTest<TestParty, TestPartyBuilder>
     {
-        protected override TestParty GetInstance()
+
+        public TestPartyTest()
         {
-            return new TestParty(Guid.Parse(SOME_ID),SOME_NAME);
+            sut = builder.Build();
+        }
+
+        protected override TestPartyBuilder GetBuilderInstance()
+        {
+            return new TestPartyBuilder();
         }
     }
+
+    class TestPartyBuilder : PartyBuilder<TestParty, TestPartyBuilder>
+    {
+        public override TestParty Build()
+        {
+            return new TestParty(id, name);
+        }
+    }
+
 }

@@ -8,16 +8,16 @@ using WebUserAPI;
 using Moq;
 using WebUserAPI.Controllers;
 using Domain;
+using Domain.builders;
 
 namespace WebUserAPITest
 {
-    public abstract class PrincipalTest<TPrincipal> : EntityTest<Principal>
+    public abstract class PrincipalTest<TPrincipal,TBuilder> : EntityTest<TPrincipal,TBuilder>
         where TPrincipal : Principal
+        where TBuilder :PrincipalBuilder<TPrincipal,TBuilder>
     {
         protected const string SOME_NAME = "some valid name";
         protected Group someGroup;
-
-        protected abstract override TPrincipal GetInstance();
 
         protected override void AssertInvariants()
         {
@@ -27,7 +27,11 @@ namespace WebUserAPITest
 
         public PrincipalTest()
         {
-            someGroup = new Group(Guid.Parse(SOME_ID), SOME_NAME);
+            builder.WithName(SOME_NAME);
+            someGroup =(Group) new GroupBuilder()
+                .WithId(Guid.Parse(SOME_ID))
+                .WithName(SOME_NAME)
+                .Build();
         }
 
         [Fact]

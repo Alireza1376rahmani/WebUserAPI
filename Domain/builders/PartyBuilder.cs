@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.builders
 {
-    public abstract class PartyBuilder<TParty, TSelf>: EntityBuilder<Party, PartyBuilder<TParty, TSelf>>
+    public abstract class PartyBuilder<TParty, TSelf>: EntityBuilder<TParty, TSelf>
         where TParty:Party
         where TSelf: PartyBuilder<TParty, TSelf>
     {
