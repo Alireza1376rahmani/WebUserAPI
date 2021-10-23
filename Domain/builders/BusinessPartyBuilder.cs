@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain.builders
+{
+    class BusinessPartyBuilder : PartyBuilder<BusinessParty, BusinessPartyBuilder>
+    {
+
+        private string nationalId;
+
+        public BusinessPartyBuilder WithNationalId(string nationalId)
+        {
+            this.nationalId = nationalId;
+            return this;
+        }
+
+        public override BusinessParty Build()
+        {
+            return new BusinessParty(id, name, nationalId);
+        }
+    }
+}
