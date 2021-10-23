@@ -131,9 +131,14 @@ namespace InfraStructure.Data.Migrations
                                 .HasForeignKey("PrincipalId");
                         });
 
+                    b.Navigation("Memberships");
+                });
+
+            modelBuilder.Entity("Domain.User", b =>
+                {
                     b.OwnsOne("Domain.PartyRef", "Party", b1 =>
                         {
-                            b1.Property<Guid>("PrincipalId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<DateTime>("JoinDate")
@@ -142,7 +147,7 @@ namespace InfraStructure.Data.Migrations
                             b1.Property<Guid>("PartyId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.HasKey("PrincipalId");
+                            b1.HasKey("UserId");
 
                             b1.HasIndex("PartyId")
                                 .IsUnique()
@@ -157,10 +162,8 @@ namespace InfraStructure.Data.Migrations
                                 .IsRequired();
 
                             b1.WithOwner()
-                                .HasForeignKey("PrincipalId");
+                                .HasForeignKey("UserId");
                         });
-
-                    b.Navigation("Memberships");
 
                     b.Navigation("Party");
                 });

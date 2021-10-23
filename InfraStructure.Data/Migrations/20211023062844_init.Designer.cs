@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfraStructure.Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211020151733_init")]
+    [Migration("20211023062844_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,9 +133,14 @@ namespace InfraStructure.Data.Migrations
                                 .HasForeignKey("PrincipalId");
                         });
 
+                    b.Navigation("Memberships");
+                });
+
+            modelBuilder.Entity("Domain.User", b =>
+                {
                     b.OwnsOne("Domain.PartyRef", "Party", b1 =>
                         {
-                            b1.Property<Guid>("PrincipalId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<DateTime>("JoinDate")
@@ -144,7 +149,7 @@ namespace InfraStructure.Data.Migrations
                             b1.Property<Guid>("PartyId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.HasKey("PrincipalId");
+                            b1.HasKey("UserId");
 
                             b1.HasIndex("PartyId")
                                 .IsUnique()
@@ -159,10 +164,8 @@ namespace InfraStructure.Data.Migrations
                                 .IsRequired();
 
                             b1.WithOwner()
-                                .HasForeignKey("PrincipalId");
+                                .HasForeignKey("UserId");
                         });
-
-                    b.Navigation("Memberships");
 
                     b.Navigation("Party");
                 });
