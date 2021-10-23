@@ -51,7 +51,7 @@ namespace WebUserAPI.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult JoinToGroup(Guid id, [FromBody] PatchPrincipalCommand command)
+        public IActionResult Patch(Guid id, [FromBody] PatchPrincipalCommand command)
         {
             command.Id = id;
             switch (command.Order)

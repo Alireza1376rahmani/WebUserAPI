@@ -28,14 +28,20 @@ namespace InfraStructure.Data
                 .OnDelete(DeleteBehavior.NoAction);
             });
 
+            //modelBuilder.Entity<Principal>()
+            //    .HasOne<Party>(p => p.Party)
+            //    .WithOne();
+            //.HasForeignKey<Party>();
+
             modelBuilder.Entity<Principal>()
-                .HasOne<Party>(p => p.Party)
-                .WithOne();
-            // .HasForeignKey<Party>();
+                .OwnsOne(p => p.Party, a =>
+                {
+                    a.HasOne<Party>().
+                    WithOne().
+                    HasForeignKey<PartyRef>(x => x.PartyId);
+                });
 
-            //modelBuilder.Entity<Principal>().OwnsOne<Party>(p => p.Party);
-
-            //modelBuilder.Entity<Principal>().OwnsOne(typeof(Party), "Party");
+            // modelBuilder.Entity<Principal>().OwnsOne(typeof(Party), "Party");
 
 
             modelBuilder.Entity<Principal>()

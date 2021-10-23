@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfraStructure.Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211020054256_init")]
+    [Migration("20211020151733_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,14 +55,7 @@ namespace InfraStructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PartyId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PartyId")
-                        .IsUnique()
-                        .HasFilter("[PartyId] IS NOT NULL");
 
                     b.ToTable("Principals");
 
@@ -108,10 +101,6 @@ namespace InfraStructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Principal", b =>
                 {
-                    b.HasOne("Domain.Party", "Party")
-                        .WithOne()
-                        .HasForeignKey("Domain.Principal", "PartyId");
-
                     b.OwnsMany("Domain.Membership", "Memberships", b1 =>
                         {
                             b1.Property<Guid>("PrincipalId")
@@ -138,6 +127,35 @@ namespace InfraStructure.Data.Migrations
                                 .WithMany()
                                 .HasForeignKey("GroupId")
                                 .OnDelete(DeleteBehavior.NoAction)
+                                .IsRequired();
+
+                            b1.WithOwner()
+                                .HasForeignKey("PrincipalId");
+                        });
+
+                    b.OwnsOne("Domain.PartyRef", "Party", b1 =>
+                        {
+                            b1.Property<Guid>("PrincipalId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("JoinDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<Guid>("PartyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("PrincipalId");
+
+                            b1.HasIndex("PartyId")
+                                .IsUnique()
+                                .HasFilter("[Party_PartyId] IS NOT NULL");
+
+                            b1.ToTable("Principals");
+
+                            b1.HasOne("Domain.Party", null)
+                                .WithOne()
+                                .HasForeignKey("Domain.PartyRef", "PartyId")
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.WithOwner()

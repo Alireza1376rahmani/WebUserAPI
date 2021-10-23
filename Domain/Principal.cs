@@ -12,9 +12,7 @@ namespace Domain
         [Required]
         public string Name { get; private set; }
         public List<Membership> Memberships { get; private set; }
-        public Party? Party { get; set; }
-        public Guid? PartyId { get; set ; }
-
+        public PartyRef Party { get; private set; }
         public Principal(Guid id, string name) : base(id)
         {
             Name = name;
@@ -39,8 +37,7 @@ namespace Domain
 
         public void AssignParty(Party party)
         {
-            this.Party = party;
-            PartyId = party.Id;
+            this.Party = new PartyRef(party.Id, DateTime.Now);
         }
 
     }

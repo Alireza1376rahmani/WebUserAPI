@@ -237,7 +237,7 @@ namespace SpecFlowProject.Steps
         public void ThenIWillFindTheUserWithTheParty()
         {
             validateUser();
-            Assert.Equal(_identifiers[0], principal.Party.Id);
+            Assert.Equal(_identifiers[0], principal.PartyId);
         }
 
 

@@ -14,7 +14,8 @@ namespace WebUserAPI.Model
         public Guid Id { get; set; }
         public string Name { get; set; }
         public List<Membership> Groups { get; set; }
-        public PartyDto Party { get; set; }
+        public Guid? PartyId { get; set; }
+        public DateTime? JoinDate { get; set; }
     }
 
     public class Membership

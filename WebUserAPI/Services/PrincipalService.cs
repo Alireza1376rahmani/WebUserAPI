@@ -55,16 +55,14 @@ namespace WebUserAPI.Services
         }
         private Model.Principal mapPrincipal(Principal principal, bool needMapGroups)
         {
-            var modelpParty = new PartyDto();
-            if(principal.PartyId != null)
-                modelpParty=  PartyService.mapPartyToPartyDto(principal.Party); // HERE
             return new Model.Principal
             {
                 Type = getPrincipalType(principal),
                 Id = principal.Id,
                 Name = principal.Name,
                 Groups = needMapGroups ? principal.Memberships.Select(g => mapMembership(g)).ToList() : new List<Model.Membership>(),
-                Party = modelpParty
+                PartyId = principal.Party?.PartyId,
+                JoinDate = principal.Party?.JoinDate
             };
         }
         private string getPrincipalType(Principal principal)

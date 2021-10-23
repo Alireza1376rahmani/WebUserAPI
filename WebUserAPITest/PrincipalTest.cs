@@ -58,7 +58,7 @@ namespace WebUserAPITest
 
             #region Assert
             Assert.NotNull(sut.Party);
-            Assert.Equal(party.Id,sut.Party.Id);
+            Assert.Equal(party.Id,sut.Party.PartyId);
             #endregion
         }
 
@@ -86,11 +86,11 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            sut.Party = party;
+            sut.AssignParty(party);
             #endregion
 
             #region Assert
-            Assert.Equal(party.Id, sut.Party.Id);
+            Assert.Equal(party.Id, sut.Party.PartyId);
             #endregion
         }
 
@@ -102,11 +102,11 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            sut.Party = party;
+            sut.AssignParty(party);
             #endregion
 
             #region Assert
-            Assert.Equal(party.Id, sut.Party.Id);
+            Assert.Equal(party.Id, sut.Party.PartyId);
             #endregion
         }
 

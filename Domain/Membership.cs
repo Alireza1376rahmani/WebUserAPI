@@ -16,4 +16,14 @@ namespace Domain
             this.JoinDate = JoinDate;
         }
     }
+    public class PartyRef
+    {
+        public Guid PartyId { get; private set; }
+        public DateTime JoinDate { get; private set; }
+        public PartyRef(Guid PartyId, DateTime JoinDate)
+        {
+            this.PartyId = PartyId;
+            this.JoinDate = JoinDate;
+        }
+    }
 }

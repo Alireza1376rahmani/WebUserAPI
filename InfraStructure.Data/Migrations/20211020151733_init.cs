@@ -29,18 +29,19 @@ namespace InfraStructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Party_PartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Party_JoinDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Principals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Principals_Parties_PartyId",
-                        column: x => x.PartyId,
+                        name: "FK_Principals_Parties_Party_PartyId",
+                        column: x => x.Party_PartyId,
                         principalTable: "Parties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,11 +76,11 @@ namespace InfraStructure.Data.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Principals_PartyId",
+                name: "IX_Principals_Party_PartyId",
                 table: "Principals",
-                column: "PartyId",
+                column: "Party_PartyId",
                 unique: true,
-                filter: "[PartyId] IS NOT NULL");
+                filter: "[Party_PartyId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
