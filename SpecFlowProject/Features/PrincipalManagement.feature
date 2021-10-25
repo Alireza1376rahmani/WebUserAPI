@@ -62,11 +62,23 @@ Scenario: a User leaves a group
 
 Scenario: a User assigns his party
 	Given A Party is registered as:
-		| Type       | Name       | LastName | NationalNumber |
-		| individual | Ali hastam | Buddy    | 1230099905     |
+		| Type       | Name   | LastName | NationalNumber |
+		| individual | Assign | sample   | 1230099905     |
 	And 	A user is registered as:
 		| Name  |
 		| AUser |
 	When I assign the party to the user
 	And I get the user by Id
 	Then I will find the user with the party
+
+Scenario: Register a User with a Party
+	Given A Party is registered as:
+		| Type       | Name     | LastName | NationalNumber |
+		| individual | Register | sample   | 9099301030     |
+	And A user is defined as:
+		| Name  |
+		| RUser |
+	When I register the user with registered party as default
+	And I get the user by Id
+	Then I will find the user with the party
+

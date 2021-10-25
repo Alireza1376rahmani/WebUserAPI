@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
+//using WebUserAPI.Model;
 using Xunit;
 
 namespace WebUserAPITest
@@ -30,6 +31,50 @@ namespace WebUserAPITest
             partyMockRepo.Setup(x => x.GetById<Party>(It.IsAny<Guid>())).Returns<Guid>(id => new BusinessParty(id, SOME_NAME, "some string"));
 
             sut = new WebUserAPI.Services.PrincipalService(mockRepo.Object, partyMockRepo.Object);
+        }
+
+        [Fact]
+        public void CreatePrincipal_MustCreateAUser_WithMinimumData()
+        {
+            #region Arrange
+            var command = new WebUserAPI.Model.CreatePrincipalCommand
+            {
+                Name= SOME_NAME,
+                Type = USER_TYPE
+            };
+            #endregion
+
+            #region Act
+            sut.CreatePrincipal(command);
+            #endregion
+
+            #region Assert
+            mockRepo.Verify(x => x.Create(It.Is<Principal>(p=>p.Name == command.Name)));
+            mockRepo.Verify(x => x.Save());
+            #endregion
+        }
+
+        [Fact]
+        public void CreatePrincipal_MustCreateAUserWithGivenParty_WithProperDataModel()
+        {
+            #region Arrange
+            var command = new WebUserAPI.Model.CreatePrincipalCommand
+            {
+                Name = SOME_NAME,
+                Type = USER_TYPE,
+                PartyId = Guid.Parse(SOME_ID)
+            };
+            #endregion
+
+            #region Act
+            sut.CreatePrincipal(command);
+            #endregion
+
+            #region Assert
+            mockRepo.Verify(x => x.Create(It.Is<User>(p => p.Name == command.Name)));
+            mockRepo.Verify(x => x.Create(It.Is<User>(p => p.Party.PartyId == command.PartyId)));
+            mockRepo.Verify(x => x.Save());
+            #endregion
         }
 
         [Fact]

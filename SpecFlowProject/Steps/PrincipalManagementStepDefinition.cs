@@ -240,6 +240,22 @@ namespace SpecFlowProject.Steps
             Assert.Equal(_identifiers[0], principal.PartyId);
         }
 
+        [When(@"I register the user with registered party as default")]
+        public async Task WhenIRegisterTheUserWithRegisteredPartyAsDefault()
+        {
+            var postRelativeUri = new Uri("principal", UriKind.Relative);
+
+            var theCommand = new CreatePrincipalCommand
+            {
+                Name = command.Name,
+                Type="user",
+                PartyId= _identifiers[0]
+            };
+
+            Response = await _client.PostAsJsonAsync(postRelativeUri, theCommand).ConfigureAwait(false);
+            Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+            _identifiers.Add(Guid.Parse((await Response.Content.ReadAsStringAsync()).Replace('"', ' ').Trim()));
+        }
 
 
 

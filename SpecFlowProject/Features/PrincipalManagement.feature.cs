@@ -431,8 +431,8 @@ this.ScenarioInitialize(scenarioInfo);
                             "NationalNumber"});
                 table14.AddRow(new string[] {
                             "individual",
-                            "Ali hastam",
-                            "Buddy",
+                            "Assign",
+                            "sample",
                             "1230099905"});
 #line 64
  testRunner.Given("A Party is registered as:", ((string)(null)), table14, "Given ");
@@ -451,6 +451,67 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 72
+ testRunner.Then("I will find the user with the party", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Register a User with a Party")]
+        [Xunit.TraitAttribute("FeatureTitle", "user Management")]
+        [Xunit.TraitAttribute("Description", "Register a User with a Party")]
+        public virtual void RegisterAUserWithAParty()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register a User with a Party", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 74
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Type",
+                            "Name",
+                            "LastName",
+                            "NationalNumber"});
+                table16.AddRow(new string[] {
+                            "individual",
+                            "Register",
+                            "sample",
+                            "9099301030"});
+#line 75
+ testRunner.Given("A Party is registered as:", ((string)(null)), table16, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table17.AddRow(new string[] {
+                            "RUser"});
+#line 78
+ testRunner.And("A user is defined as:", ((string)(null)), table17, "And ");
+#line hidden
+#line 81
+ testRunner.When("I register the user with registered party as default", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 82
+ testRunner.And("I get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 83
  testRunner.Then("I will find the user with the party", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
