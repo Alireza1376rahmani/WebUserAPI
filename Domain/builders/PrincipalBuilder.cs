@@ -11,7 +11,7 @@ namespace Domain.builders
         where TSelf: PrincipalBuilder<TPrincipal, TSelf>
     {
 
-        protected string name;
+        protected string name = "";
 
         public PrincipalBuilder<TPrincipal,TSelf> WithName(string name)
         {

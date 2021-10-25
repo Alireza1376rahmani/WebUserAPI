@@ -26,7 +26,7 @@ namespace WebUserAPITest
 
         public PartyServiceTest()
         {
-            SOME_USER = new User(Guid.Parse(SOME_GUID), SOME_NAME, null);
+            SOME_USER = new User(Guid.Parse(SOME_GUID), SOME_NAME);
             mockRepo = new Mock<IRepository<Party>>();
             mockRepo.Setup(x => x.Save());
             mockRepo.Setup(x => x.GetById<Party>(It.IsAny<Guid>())).Returns<Guid>(id => new IndividualParty(id, SOME_NAME, SOME_NAME, SOME_STRING));

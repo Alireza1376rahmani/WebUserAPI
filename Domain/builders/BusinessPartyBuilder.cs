@@ -9,7 +9,7 @@ namespace Domain.builders
     public class BusinessPartyBuilder : PartyBuilder<BusinessParty, BusinessPartyBuilder>
     {
 
-        private string nationalId;
+        private string nationalId = "0";
 
         public BusinessPartyBuilder WithNationalId(string nationalId)
         {

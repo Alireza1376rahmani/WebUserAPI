@@ -14,7 +14,7 @@ namespace WebUserAPITest
 
         public UserTest()
         {
-            sut = builder.WithParty(new BusinessParty(Guid.NewGuid(), SOME_NAME, SOME_STRING)).Build();
+            sut = builder.WithParty(Guid.Parse(SOME_ID)).Build();
         }
 
         protected override UserBuilder GetBuilderInstance()
@@ -30,7 +30,7 @@ namespace WebUserAPITest
             #endregion
 
             #region Act
-            Action act = () => new User(Guid.Parse(SOME_ID), SHORT_NAME,null);
+            Action act = () => new User(Guid.Parse(SOME_ID), SHORT_NAME);
             #endregion
 
             #region Assert

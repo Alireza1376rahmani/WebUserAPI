@@ -10,7 +10,7 @@ namespace Domain.builders
         where TParty:Party
         where TSelf: PartyBuilder<TParty, TSelf>
     {
-        protected string name;
+        protected string name = "";
 
         public TSelf WithName(string name)
         {

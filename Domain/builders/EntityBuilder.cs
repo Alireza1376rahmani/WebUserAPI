@@ -10,7 +10,7 @@ namespace Domain.builders
         where TEntity:Entity
         where TSelf: EntityBuilder<TEntity,TSelf>
     {
-        protected  Guid id;
+        protected  Guid id = Guid.Empty;
 
         public TSelf WithId(Guid id )
         {

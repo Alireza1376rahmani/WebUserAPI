@@ -8,8 +8,8 @@ namespace Domain.builders
 {
     public class IndividualPartyBuilder : PartyBuilder<IndividualParty, IndividualPartyBuilder>
     {
-        protected string lastName;
-        protected string nationalCode;
+        protected string lastName = "";
+        protected string nationalCode = "0";
 
         public IndividualPartyBuilder WithLastName(string lastName)
         {

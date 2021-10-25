@@ -9,11 +9,11 @@ namespace Domain.builders
     public class UserBuilder : PrincipalBuilder<User, UserBuilder>
     {
 
-        private Party Party = null;
+        private Guid Party = Guid.Empty;
 
-        public UserBuilder WithParty(Party party)
+        public UserBuilder WithParty(Guid partyId)
         {
-            Party = party;
+            Party = partyId;
             return this;
         }
 
